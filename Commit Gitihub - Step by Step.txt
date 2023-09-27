@@ -1,0 +1,38 @@
+FAZER DO 0 EM UM REPOSITORIO NOVO
+
+cria a pasta
+botao direito, bash here
+git init
+criar arquivo editavel
+git status 
+git remote add origin LINK.git
+git add .
+git commit -m "commit inicial"
+git push --set-upstream origin master
+
+
+
+
+FAZER EM UM REPOSITORIO DE ALGUEM
+
+entra na pasta
+git init
+git remote add origin LINKDOPROJETO.git
+git pull --set-upstream origin master //puxa os arquivos do master do repositorio, so precisa fazer pela primeira vez
+git add .
+git commit -m "nome do commit"
+git push --set-upstream origin master //o setupstream se for a primeira vez apenas
+
+
+MANDAR UM ARQUIVO PARA O REPOSITORIO
+
+git add .
+git commit -m "nome do commit"
+git pull // pra puxar os arquivos existentes
+git push
+
+
+
+
+
+
