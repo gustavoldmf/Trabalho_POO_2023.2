@@ -2,37 +2,25 @@
 
 include_once('../global.php');
 
-class Dentista extends Funcionario {
+class Dentista extends Pessoa {
 
-    private $CRO;
-    private $especialidade;
+    protected $CRO;
   
-    public function __construct($nome, $RG, $email, $telefone, $especialidade, $CRO) 
+    public function __construct($nome, $RG, $email, $telefone, $CRO) 
     {
         $this->nome=$nome;
         $this->RG=$RG;
         $this->email=$email;
         $this->telefone=$telefone;
-        $this->especialidade=$especialidade;
         $this->CRO=$CRO;
     }
-
-    public function getEspecialidade()
-    {
-      return $this->especialidade;
-    }
-
-    public function setEspecialidade ($especialidade)
-    {
-      $this->especialidade=$especialidade;
-    }  
 
     public function getCRO ()
     {
       return $this->CRO;
     }
 
-    public function setCRO ()
+    public function setCRO ($CRO)
     {
       $this->CRO = $CRO;
     }
