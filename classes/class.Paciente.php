@@ -13,7 +13,7 @@ class Paciente extends Pessoa {
         $this->RG=$RG;
         $this->email=$email;
         $this->telefone=$telefone;
-        $this->nascimento=$nascimento;
+        $this->nascimento= $nascimento;
     }
 
     public function getNascimento ()
@@ -30,10 +30,24 @@ class Paciente extends Pessoa {
     {
       $this->ClienteAssociado=$ClienteAssociado;  
     }
+      
+    public function DesassociaCliente ($ClienteAssociado)
+    {
+      $this->ClienteAssociado= null;  
+    }
 
     public function getClienteAssociado ()
     {
       return $this->ClienteAssociado;
+    }
+
+    public function exibeInfo(){
+      print("Informações do Paciente:" ."\n\n");
+      print("Nome:" .$this->nome ."\n");
+      print("RG:" .$this->RG ."\n");
+      print("Email:" .$this->email ."\n");
+      print("Contato:" .$this->telefone ."\n");
+      print("Data de nascimento:" .$this->nascimento ."\n");
     }
 
 }

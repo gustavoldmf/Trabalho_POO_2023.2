@@ -46,8 +46,4 @@ class Procedimentos {
       $this->ValorUnitario = $ValorUnitario;
     }  
 
-      public function setValorUnitario ($ValorUnitario)
-    {
-      $this->ValorUnitario = $ValorUnitario;
-    } 
 }

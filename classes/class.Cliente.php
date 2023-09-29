@@ -16,6 +16,10 @@ class Cliente extends Pessoa {
         $this->cpf=$cpf;
     }
 
+    public function getNome ()
+    {
+      return $this->nome;
+    }
     public function getCpf ()
     {
       return $this->cpf;

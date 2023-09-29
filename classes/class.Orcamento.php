@@ -2,14 +2,14 @@
 
 class Orcamento
 {
-    protected $pacienteAssociado, $DentistaAssociado, $Data, $ValorTotal, $Aprovado;
+    protected $pacienteAssociado, $DentistaAssociado, $data, $ValorTotal, $Aprovado;
     protected $ProcedimentosAssociados = array();
 
     public function __construct($pacienteAssociado, $DentistaAssociado, $data)
     {
-        $this->PacienteAssociado = $pacienteAssociado;
+        $this->pacienteAssociado = $pacienteAssociado;
         $this->DentistaAssociado = $DentistaAssociado;
-        $this->Data = $Data;
+        $this->data = $data;
     }
   
     public function getPacienteAssociado ()
@@ -39,7 +39,7 @@ class Orcamento
             $soma = $soma + $this->ProcedimentosAssociados[$i]->getValorUnitario();
         }
         $ValorTotal = $soma;
-        return $soma;
+        return $ValorTotal;
     }
   
     public function getProcedimentosAssociados ()
@@ -80,9 +80,9 @@ class Orcamento
     public function calculaOrcamento ()
     {
         for ($i = 0; $i < count($this->ProcedimentosAssociados); $i++) {
-            print ("Procedimento:  $this->ProcedimentosAssociados[$i]->getDescricao() \n");
-            print ("Valor Unitário:  $this->ProcedimentosAssociados[$i]->getValorUnitario() \n\n");
+            print ("\n" ."Procedimento: "  .$this->ProcedimentosAssociados[$i]->getDescricao() ."\n\n" );
+            print ("Valor Unitário: "  .$this->ProcedimentosAssociados[$i]->getValorUnitario() ."\n");
         }
-        print("Valor Total: R$ $this->getValorTotal()");
+        print("\n" ."Valor Total: R$" .$this->getValorTotal() ."\n");
     }
 }
