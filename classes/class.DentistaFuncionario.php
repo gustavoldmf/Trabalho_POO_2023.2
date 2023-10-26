@@ -4,8 +4,6 @@ include_once('../global.php');
 
 class DentistaFuncionario extends Dentista {
 
-    private $especialidade;
-    private $endereco;
     private $salario;
   
     public function __construct($nome, $RG, $email, $telefone, $CRO, $especialidade, $endereco, $salario) 
