@@ -27,6 +27,16 @@ class Dentista extends Pessoa {
     {
       $this->CRO = $CRO;
     }
+   
+    public function getEndereco()
+    {
+      return $this->endereco;
+    }
+
+    public function setEndereco($endereco)
+    {
+      $this->endereco = $endereco;
+    } 
     
     static public function getFilename() {
       return get_called_class()::$local_filename;
