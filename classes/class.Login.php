@@ -19,7 +19,6 @@ include_once('../global.php');
    static function getInstance(Usuario $Usuario) {
        if ( self::$ptrInstance == null )
           self::$ptrInstance = new Login($Usuario);
-         // print("O orçamento foi aprovado e será iniciado um tratamento? Digite 0           para não e 1 para sim."."\n");
 
        return self::$ptrInstance;
    }
@@ -27,4 +26,8 @@ include_once('../global.php');
    public function addLogin(string $p_loginText ) {
        array_push($this->login, $p_loginText);
    }
+
+     public function getUsuario(){
+       return this->usuario;        
+    }
 }
