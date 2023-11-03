@@ -4,7 +4,7 @@ include_once('../global.php');
 
 class Tratamento extends Orcamento{
 
-     //protected $orcamentoAssociado, $tipoPagamento;
+    private $orcamentoAssociado, $tipoPagamento;
 
 
 
@@ -16,19 +16,18 @@ class Tratamento extends Orcamento{
 
     }
 
-    public function verificaPermissao (Usuario $Usuario, $Permissao){
-
-        
-        $Teste = $Usuario->getPerfil() 
+    public function verificaPermissao(Usuario $Usuario, $Permissao) {
+        $Teste = $Usuario->getPerfil();
         $vetor = $Teste->getPermissoes();
-
-          $Permissao = $vetor [i];
-          return true;
-          return false;
-
-
-     // rascunho
-     // public function verificaPermissao (Usuario $Usuario, $Permissao){     
+    
+        foreach ($vetor as $permissao) {
+            if ($permissao == $Permissao) {
+                return true; // Encontrou a permissão desejada, retornando verdadeiro
+            }
+        }
+    
+        return false; // A permissão não foi encontrada, retornando falso
     }
+    
 
 }

@@ -1,72 +1,84 @@
- <?php 
+<?php 
 
 include_once('../global.php');
 
-class Tratamento extends Orcamento{
+class Tratamento extends Orcamento {
+    private $orcamentoAssociado;
+    private $especialidade;
+    private $tipoPagamento;
+    private $execucao = [];
+    private $Concluidos = [];
 
-    private $orcamento, $paciente;
-
-    protected $orcamentoAssociado, $tipoPagamento;
-
- 
-
-    public function __construct($orcamentoAssociado, $tipoPagamento) {
-
+    public function __construct(Especialidade $especialidade, $orcamentoAssociado, $tipoPagamento) {
         $this->orcamentoAssociado = $orcamentoAssociado;
-
+        $this->especialidade = $especialidade;
         $this->tipoPagamento = $tipoPagamento;
-
     }
 
- 
-
-    public function getOrcamentoAssociado (){
-
+    public function getOrcamentoAssociado() {
         return $this->orcamentoAssociado;
-
     }
 
- 
-
-    public function getTipoPagamento (){
-
+    public function getTipoPagamento() {
         return $this->tipoPagamento;
-
     }
 
- 
-
-    public function setOrcamentoAssociado ($orcamentoAssociado)
-
-    {
-
+    public function setOrcamentoAssociado($orcamentoAssociado) {
         $this->orcamentoAssociado = $orcamentoAssociado;
-
     }
 
- 
-
-    public function setTipoPagamento ($tipoPagamento)
-
-    {
-
+    public function setTipoPagamento($tipoPagamento) {
         $this->tipoPagamento = $tipoPagamento;
+    }
 
-    }    
-    public function AgendaConsulta ($DentistaEx, $DataC, $HorarioC, $DuracaoC)
+    public function verificaEspecialidadeDentista(Dentista $dentista, Procedimento $procedimento) {
+        $especialidadeDentista = $dentista->getEspecialidade();
+        $especialidadeProcedimento = $procedimento->getEspecialidade();
+        return $especialidadeDentista->getNomeEspecialidade() === $especialidadeProcedimento->getNomeEspecialidade();
+    }
 
-    {
-      // os parametros serao inseridos dentro da funcao, nao como parametros. para isso vamos usar o getrecords e a partir dele selecionar o dentista escolhido
-      print ("Os seguintes procedimentos estao definidos no tratamento: \n");
-      for (i=0; i<$orcamentoAssociado->getTamProc(); i++){
-      print ("($i+1) - $orcamentoAssociado->getProcedimento(i)\n");
-      }
-      print ("Digite o numero do procedimento escolhido: ");
-      $decisao = readline();
-      $decisao = $decisao - 1;
+    public function AssociaResponsavel(Dentista $DentistaEx, Procedimento $Procedimento) {
+        if ($this->verificaEspecialidadeDentista($DentistaEx, $Procedimento)) {
+            $responsabilidades = new Responsabilidades($DentistaEx, $Procedimento);
+            $this->execucao[] = $responsabilidades; 
+            return true;
+        } else {
+            echo "O dentista não possui a especialidade necessária para o procedimento.";
+            return false;
+        }
+    }
 
-      $c = new Consulta ($orcamentoAssociado->getPaciente, $DentistaEx, $DataC, $HorarioC, $DuracaoC, $orcamentoAssociado->getProcedimento(decisao));
-      
-      
+    public function marcaConsulta(Paciente $paciente, $data, $horario, $duracao, Responsabilidades $responsabilidades) {
+        print ("Os seguintes procedimentos estão definidos no tratamento: \n");
+        for ($i = 0; $i < $orcamentoAssociado->getTamProc(); $i++) {
+            print ("($i+1) - " . $orcamentoAssociado->getProcedimento($i)->getNome() . "\n");
+        }
+        print ("Digite o número do procedimento escolhido: ");
+
+        $decisao = readline();
+        $decisao = $decisao - 1;
+
+        $c = new Consulta(
+            $paciente,
+            $DentistaEx,
+            $data,
+            $horario,
+            $duracao,
+            $orcamentoAssociado->getProcedimento($decisao)
+        );
+
+        $c->setResponsabilidades($responsabilidades);
+
+        return $c;
+    }
+
+    public function finalizaProcedimento(Responsabilidades $responsabilidades, $dataConclusao) {
+        if ($this->verificaEspecialidadeDentista($responsabilidades->getDentistaEx(), $responsabilidades->getProcedimento())) {
+            $concluido = new Concluidos($dataConclusao);
+            $this->Concluidos[] = $concluido;
+            return true;
+        } else {
+            return false;
+        }
     }
 }

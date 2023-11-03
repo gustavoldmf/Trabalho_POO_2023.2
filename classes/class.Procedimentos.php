@@ -7,6 +7,7 @@ class Procedimentos {
     private $nome;
     private $descricao;
     private $ValorUnitario;
+    private $especialidade;
 
 
     public function __construct($nome, $descricao, $ValorUnitario) 

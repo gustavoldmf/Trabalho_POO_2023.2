@@ -2,28 +2,37 @@
 
 include_once('../global.php');
 
-class DentistaParceiro extends Dentista {
+class DentistaParceiro extends Dentista{
+    private $procedimentosFeitos = [];
+    private $Habilitacao = [];
 
-    private $ComissaoPorCento;
-    
-    public function __construct($nome, $RG, $email, $telefone, $CRO, $endereco, $ComissaoPorCento) 
-    {
-        $this->nome=$nome;
-        $this->RG=$RG;
-        $this->email=$email;
-        $this->telefone=$telefone;
-        $this->CRO=$CRO;
-        $this->endereco=$endereco;
-        $this->ComissaoPorCento=$ComissaoPorCento;
+    public function __construct($nome, $RG, $email, $telefone, $CRO, $endereco){
+        parent::__construct($nome, $RG, $email, $telefone, $CRO, $endereco);
     }
 
-    public function getComissaoPorCento()
-    {
-      return $this->ComissaoPorCento;
+    public function addProcFeitos(Concluidos $concluidos){
+        $this->procedimentosFeitos[] = $concluidos;
     }
 
-    public function setComissaoPorCento ($ComissaoPorCento)
-    {
-      $this->PorcetagemComissao = $ComissaoPorCento;
+    public function addHabilitacao(Habilitacao $habilitacao){
+        $this->Habilitacao[] = $habilitacao;
+    }
+
+    public function CalcPagamento(array $procFeitos, array $Habilitacao) {
+      $totalPagamento = 0;
+
+    foreach ($procFeitos as $concluido) {
+    $dataConclusao = $concluido->getdata();
+
+      foreach ($this->Habilitacao as $habilitacao) {
+      $especialidade = $habilitacao->getEspecialidade();
+      $comissao = $habilitacao->getComissao();
+      if ($especialidade->getNomeEspecialidade() === $dataConclusao){
+            $pagamento = $comissao * $valorProcedimento;
+              $totalPagamento += $pagamento;
+      }
+      }
+    }
+    return $totalPagamento;
     }
 }
