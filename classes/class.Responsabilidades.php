@@ -1,9 +1,12 @@
 <?php
 
-    class Responsabilidades {
+include_once('../global.php');
 
-        private $dentistaEx;
-        private $procedimento;
+    class Responsabilidades extends persist{
+
+        protected $dentistaEx;
+        protected $procedimento;
+        static $local_filename = "responsabilidades.txt";
 
         public function __construct(Dentista $dentistaEx, Procedimento $procedimento) {
             $this->dentistaEx = $dentistaEx;
@@ -25,4 +28,8 @@
         public function setProcedimento(Procedimento $procedimento) {
             $this->procedimento = $procedimento;
         }
+
+      static public function getFilename() {
+          return get_called_class()::$local_filename;
+      }
 }

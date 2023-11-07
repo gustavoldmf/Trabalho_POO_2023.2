@@ -11,7 +11,7 @@ include_once('../global.php');
     private array $login = array();
     private $usuario;
 
-    private function __construct($Usuario) 
+    private function __construct(Usuario $Usuario) 
     {
         $this->usuario = $Usuario;
     }
@@ -30,4 +30,8 @@ include_once('../global.php');
      public function getUsuario(){
        return this->usuario;        
     }
+
+     static public function getFilename() {
+         return get_called_class()::$local_filename;
+     }
 }

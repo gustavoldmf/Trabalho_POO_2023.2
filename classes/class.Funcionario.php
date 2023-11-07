@@ -1,13 +1,15 @@
     <?php 
-
 include_once('../global.php');
 
 class Funcionario extends Pessoa {
 
-    private $endereco;
-    private $salario;
+    protected $endereco;
+    protected $salario;
+    // leticia : adicionei atributo usuario
+    protected $usuario;
+    static $local_filename = "funcionario.txt";
   
-    public function __construct($nome, $RG, $email, $telefone, $endereco, $salario) 
+    public function __construct(string $nome, string $RG, string $email, string $telefone, string $endereco, string $salario) 
     {
         $this->nome=$nome;
         $this->RG=$RG;
@@ -22,7 +24,7 @@ class Funcionario extends Pessoa {
       return $this->endereco;
     }
 
-    public function setEndereco($endereco)
+    public function setEndereco(string $endereco)
     {
       $this->endereco=$endereco;
     }  
@@ -32,8 +34,20 @@ class Funcionario extends Pessoa {
       return $this->salario;
     }
 
-    public function setSalario ()
+    public function setSalario (string $salario)
     {
       $this->salario = $salario;
+    }
+
+    public function setUsuario(Usuario $usuario) {
+        $this->usuario = $usuario;
+    }
+  
+    public function getUsuario() {
+       return $this->usuario;
+    }
+
+    static public function getFilename() {
+        return get_called_class()::$local_filename;
     }
 }

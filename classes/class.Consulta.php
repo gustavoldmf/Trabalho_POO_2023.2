@@ -1,13 +1,14 @@
     <?php 
+include_once('../global.php');
+class Consulta extends persist{
 
-class Consulta {
+  // leticia: retirei o dentistaExe da classe consulta, conforme mudança no último sprint
+  protected $paciente, $dataC, $horarioC, $duracaoC, $procedimentoC;
+  static $local_filename = "consulta.txt";
 
-  private $paciente, $dentistaExe, $dataC, $horarioC, $duracaoC, $procedimentoC;
-
-  public function __construct($paciente, $dentistaExe, $dataC, $horarioC, $duracaoC, $procedimentoC)
+  public function __construct(Paciente $paciente, string $dataC, string $horarioC, int $duracaoC, Procedimento $procedimentoC)
   {
       $this->paciente = $paciente;
-      $this->dentistaExe = $dentistaExe;
       $this->dataC = $dataC;
       $this->horarioC = $horarioC;
       $this->duracaoC = $duracaoC;
@@ -19,19 +20,9 @@ class Consulta {
     return $this->paciente;
   }
 
-  public function setPaciente($paciente)
+  public function setPaciente(Paciente $paciente)
   {
     $this->paciente = $paciente;
-  }
-
-  public function getDentistaExe()
-  {
-    return $this->dentistaExe;
-  }
-
-  public function setDentistaExe($dentistaExe)
-  {
-    $this->dentistaExe = $dentistaExe;
   }
 
   public function getDataC()
@@ -39,7 +30,7 @@ class Consulta {
     return $this->dataC;
   }
 
-  public function setDataC($dataC)
+  public function setDataC(string $dataC)
   {
     $this->dataC = $dataC;
   }
@@ -49,7 +40,7 @@ class Consulta {
     return $this->horarioC;
   }
 
-  public function setHorarioC($horarioC)
+  public function setHorarioC(string $horarioC)
   {
     $this->horarioC = $horarioC;
   }
@@ -59,7 +50,7 @@ class Consulta {
     return $this->duracaoC;
   }
 
-  public function setDuracaoC($duracaoC)
+  public function setDuracaoC(int $duracaoC)
   {
     $this->duracaoC = $duracaoC;
   }
@@ -69,9 +60,13 @@ class Consulta {
     return $this->procedimentoC;
   }
 
-  public function setProcedimentoC($procedimentoC)
+  public function setProcedimentoC(Procedimento $procedimentoC)
   {
     $this->procedimentoC = $procedimentoC;
+  }
+
+  static public function getFilename() {
+      return get_called_class()::$local_filename;
   }
 
 }

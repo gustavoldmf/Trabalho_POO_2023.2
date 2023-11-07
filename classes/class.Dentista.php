@@ -6,21 +6,26 @@ class Dentista extends Pessoa {
   protected $CRO;
   protected $endereco;
   protected $especialidadesDentista = []; // Atualização aqui
-
-  public function __construct($nome, $RG, $email, $telefone, $CRO, $endereco) {
+  //leticia : adicionei o atributo usuario
+  protected $usuario;
+  static $local_filename = "dentista.txt";
+  
+  public function __construct(string $nome, string $RG, string $email, string $telefone, string $CRO, string $endereco) {
       $this->nome = $nome;
       $this->RG = $RG;
       $this->email = $email;
       $this->telefone = $telefone;
       $this->CRO = $CRO;
       $this->endereco = $endereco;
+        
+      $this->especialidadesDentista = [];
   }
 
   public function getCRO() {
       return $this->CRO;
   }
 
-  public function setCRO($CRO) {
+  public function setCRO(string $CRO) {
       $this->CRO = $CRO;
   }
 
@@ -28,15 +33,29 @@ class Dentista extends Pessoa {
       return $this->endereco;
   }
 
-  public function setEndereco($endereco) {
+  public function setEndereco(string $endereco) {
       $this->endereco = $endereco;
   }
 
   public function getEspecialidadesDentista() { // Atualização aqui
       return $this->especialidadesDentista;
   }
+  
+  //leticia: mudei metodo para addEspecialidade em vez de set especialidade. Agora, adicionamos uma especialidade por vez.
+  
+  public function addEspecialidadesDentista(Especialidade $especialidade) { 
+     array_push($this->especialidadesDentista, $especialidade);
+  }
 
-  public function setEspecialidadesDentista($especialidadesDentista) { // Atualização aqui
-      $this->especialidadesDentista = $especialidadesDentista;
+  public function setUsuario(Usuario $usuario) {
+      $this->usuario = $usuario;
+  }
+  
+  public function getUsuario() {
+     return $this->usuario;
+  }
+  
+  static public function getFilename() {
+      return get_called_class()::$local_filename;
   }
 }

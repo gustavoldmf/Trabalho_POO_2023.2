@@ -1,169 +1,128 @@
 <?php 
 
-class Orcamento
-{
-    protected $PacienteAssociado, $DentistaAssociado, $Data, $ValorTotal, $Aprovado;
-    protected $ProcedimentosAssociados = array();
-    protected $DetalhamentosAssociados = array();
+include_once('../global.php');
 
-    public function __construct($PacienteAssociado, $DentistaAssociado, $Data)
+class Orcamento extends persist{
+  
+    protected $pacienteAssociado, $dentistaAssociado, $data, $valorTotal;
+    protected $procedimentosAssociados = [];
+    protected $detalhamentosAssociados = [];
+    static $local_filename = "orcamento.txt";
+  
+
+    public function __construct(Paciente $pacienteAssociado, Dentista $dentistaAssociado, string $data)
     {
-        $this->PacienteAssociado = $PacienteAssociado;
-        $this->DentistaAssociado = $DentistaAssociado;
-        $this->Data = $Data;
+        $this->pacienteAssociado = $pacienteAssociado;
+        $this->dentistaAssociado = $dentistaAssociado;
+        $this->data = $data;
+        $this->procedimentosAssociados = [];
+        $this->detalhamentosAssociados = [];
     }
   
     public function getPacienteAssociado ()
     {
-        return $this->PacienteAssociado;
+        return $this->pacienteAssociado;
     }
 
     public function getDentistaAssociado ()
     {
-        return $this->DentistaAssociado;
+        return $this->dentistaAssociado;
     }
   
     public function getData ()
     {
-        return $this->Data;
+        return $this->data;
     }    
-
-    public function getAprovado ()
-    {
-        return $this->Aprovado;
-    }
   
     public function getValorTotal ()
     {
         $soma = 0;
-        for ($i = 0; $i < count($this->ProcedimentosAssociados); $i++) {
-            $soma = $soma + $this->ProcedimentosAssociados[$i]->getValorUnitario();
+        for ($i = 0; $i < count($this->procedimentosAssociados); $i++) {
+            $soma = $soma + $this->procedimentosAssociados[$i]->getValorUnitario();
         }
-        $ValorTotal = $soma;
-        return $ValorTotal;
+        $valorTotal = $soma;
+        return $valorTotal;
     }
   
     public function getProcedimentosAssociados ()
     {
-        return $this->ProcedimentosAssociados;
+        return $this->procedimentosAssociados;
     }
   
     public function getDetalhamentosAssociados ()
     {
-        return $this->DetalhamentosAssociados;
+        return $this->detalhamentosAssociados;
     }
 
-    public function setPacienteAssociado ($PacienteAssociado)
+    public function setPacienteAssociado (Paciente $pacienteAssociado)
     {
-        $this->PacienteAssociado = $PacienteAssociado;
+        $this->pacienteAssociado = $pacienteAssociado;
     }
 
-    public function setDentistaAssociado ($DentistaAssociado)
+    public function setDentistaAssociado (Dentista $dentistaAssociado)
     {
-        $this->DentistaAssociado = $DentistaAssociado;
+        $this->dentistaAssociado = $dentistaAssociado;
     }
   
-    public function setData ($Data)
+    public function setData (string $data)
     {
-        $this->Data = $Data;
+        $this->data = $data;
     }    
 
-    public function setValorTotal ($ValorTotal)
+    public function setValorTotal (float $valorTotal)
     {
-        $this->ValorTotal = $ValorTotal;
+        $this->valorTotal = $valorTotal;
     } 
-
-   public function addProcedimento ($Procedimento)
+  
+   public function addProcedimento (Procedimento $procedimento)
     {
-        array_push ($this->ProcedimentosAssociados, $Procedimento);
-      
-        $a = 3;
-        while (($a != 0) and ($a != 1)) {
-          print("Voce gostaria de adicionar um detalhamento para o procedimento adicionado? Digite 0 para nao e 1 para sim."."\n");
-          $a = readline();
-        }
-      
-        if ($a==1){
-          $b = sizeof(this->ProcedimentosAssociados);
-          $this->addDetalhamento($b - 1);
-        }
+        array_push ($this->procedimentosAssociados, $procedimento);
     }
 
-    public function addDetalhamento($a)
-    {
-        
-        $c = 2;
-        while (($c == 2) or ($c == 0)) {
-        print("Digite o detalhamento para o procedimento ".$this->ProcedimentosAssociados[$a]."\n");
-        $b = readline();
-           
-          while (($c != 0) and ($c != 1)) {
-            print("O texto digitado foi: ".$b." Voce gostaria de confirmar esse detalhamento? Digite 0 para nao e 1 para sim"."\n");
-            $c = readline();
-          }
-        }
-        if($c == 1){
-        $this->DetalhemtnosAssociados[$a] = $b;
-        }
+    public function addDetalhamento (string $detalhamento)
+    {   
+        array_push ($this->detalhamentosAssociados, $detalhamento);
     }
 
     public function calculaOrcamento ()
     {
-        for ($i = 0; $i < count($this->ProcedimentosAssociados); $i++) {
-            print ("\n" ."Procedimento: "  .$this->ProcedimentosAssociados[$i]->getDescricao() ."\n\n" );
-            print ("Valor Unitario: "  .$this->ProcedimentosAssociados[$i]->getValorUnitario() ."\n");
-        }
-        print("\n" ."Valor Total do Orçamento: R$" .$this->getValorTotal() ."\n");
+        return $this->getValorTotal();
     }
 
-    public function analiseAprovacao ()
+    public function analiseAprovacao (int $formaPgto, int $parcelas)
     {
-      $a = 3;
-        while (($a != 0) and ($a != 1)) {
-          print("O orçamento foi aprovado e sera iniciado um tratamento? Digite 0 para nao e 1 para sim."."\n");
-          $a = readline();
+      if ($formaPgto === 1 or $formaPgto === 2 or $formaPgto === 3){
+        
+        if ($formaPgto === 1){
+          $tipoPgto = 'Dinheiro a vista';
+        } else if ($formaPgto === 2){
+          $tipoPgto = 'Cartao de credito a vista';
+        } else if ($formaPgto === 3){
+          $tipoPgto = 'Parcelado no cartao de '.$parcelas.' vezes' ;
         }
+        
+         $Tratamento = new Tratamento($this, $tipoPgto);
+          return $Tratamento;
 
-        if ($a == 1) {
-          
-          $b = 0;
-          $this->Aprovado = 1;
-          while (($b != 1) and ($b != 2) and ($b != 3)) {
-            print("Qual o metodo de pagamento? Digite 1 para dinheiro a vista, 2 para cartao de credito a vista e 3 para parcelado no cartao de credito em ate 6 vezes"."\n");
-            $b = readline();
-          }  
-          
-          if ($b == 1){
-          
-            $metodoPagamento = 'Dinheiro a vista';
-            
-          } elseif ($b == 2){
-          
-           $metodoPagamento = 'Cartao de Credito a Vista';
-           
-          } elseif ($b == 3) {
-          
-            $c = 0;
-            while (($c != 1) and ($c != 2) and ($c != 3) and ($c != 4) and ($c != 5) and ($c != 6)) {
-            print("Qual sera o numero de parcelas? Digite um numero de 1 a 6"."\n");
-            $c = readline();
-            }
-            $metodoPagamento = 'Cartao de Credito, dividido de' .$c.' vezes';
-            
-          }
-          
-           $Tratamento = new Tratamento($this, $metodoPagamento)
-           
-        }
+      } else {
+        print "Forma de pagamento invalida";
+        return false;
+      }
+
     }
+  
     public function tamProcedimento ()
     {
-        return sizeof ($this->ProcedimentosAssociados);
+        return sizeof ($this->procedimentosAssociados);
     }
 
-      public function retornaProcedimento ($i)
+      public function retornaProcedimento (int $i)
     {
-        return $this->ProcedimentosAssociados[$i];
+        return $this->procedimentosAssociados[$i];
+    }
+
+    static public function getFilename() {
+        return get_called_class()::$local_filename;
     }
 
 }

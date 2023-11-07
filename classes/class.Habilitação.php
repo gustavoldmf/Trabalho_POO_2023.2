@@ -1,11 +1,15 @@
 <?php
 
-class Habilitacao{
+include_once('../global.php');
 
-    private $especialidade;
-    private $comissao;
+class Habilitacao extends persist {
 
-    public function __construct(Especialidade $especialidade, $comissao) {
+    protected $especialidade;
+    protected $comissao;
+    static $local_filename = "habilitacao.txt";
+  
+
+    public function __construct(Especialidade $especialidade, float $comissao) {
         $this->especialidade = $especialidade;
         $this->comissao = $comissao;
     }
@@ -22,8 +26,12 @@ class Habilitacao{
         return $this->comissao;
     }
 
-    public function setComissao($comissao) {
+    public function setComissao(float $comissao) {
         $this->comissao = $comissao;
+    }
+
+    static public function getFilename() {
+        return get_called_class()::$local_filename;
     }
 }
 
