@@ -1,17 +1,16 @@
 <?php 
 
-include_once('../global.php');
+include_once('global.php');
 
-class Tratamento extends Orcamento {
-    private $orcamentoAssociado;
-    private $especialidade;
-    private $tipoPagamento;
-    private $execucao = [];
-    private $Concluidos = [];
+class Tratamento extends persist {
+    protected $orcamentoAssociado;
+    protected $tipoPagamento;
+    protected $execucao = [];
+    protected $concluidos = [];
+    static $local_filename = "tratamento.txt";
 
-    public function __construct(Especialidade $especialidade, $orcamentoAssociado, $tipoPagamento) {
+    public function __construct(Orcamento $orcamentoAssociado, string $tipoPagamento) {
         $this->orcamentoAssociado = $orcamentoAssociado;
-        $this->especialidade = $especialidade;
         $this->tipoPagamento = $tipoPagamento;
     }
 
@@ -23,62 +22,59 @@ class Tratamento extends Orcamento {
         return $this->tipoPagamento;
     }
 
-    public function setOrcamentoAssociado($orcamentoAssociado) {
+    public function setOrcamentoAssociado(Orcamento $orcamentoAssociado) {
         $this->orcamentoAssociado = $orcamentoAssociado;
     }
 
-    public function setTipoPagamento($tipoPagamento) {
+    public function setTipoPagamento(string $tipoPagamento) {
         $this->tipoPagamento = $tipoPagamento;
     }
 
-    public function verificaEspecialidadeDentista(Dentista $dentista, Procedimento $procedimento) {
-        $especialidadeDentista = $dentista->getEspecialidade();
+  // leticia: temos que verificar um array inteiro de especialidades do dentista com uma unica especialidade de procedimento. portanto, tem que ser um for que passa pelo array
+  
+    public function verificaEspecialidadeDentista(Dentista $dentista, Procedimentos $procedimento) {
+        $arrayEspecialidadeDentista = $dentista->getEspecialidadesDentista();
         $especialidadeProcedimento = $procedimento->getEspecialidade();
-        return $especialidadeDentista->getNomeEspecialidade() === $especialidadeProcedimento->getNomeEspecialidade();
+
+        foreach($arrayEspecialidadeDentista as $especialidade){
+          if ($especialidade->getNomeEspecialidade() === $especialidadeProcedimento->getNomeEspecialidade())         {
+            return true;
+          }
+        }
+      
+        return false;
     }
 
-    public function AssociaResponsavel(Dentista $DentistaEx, Procedimento $Procedimento) {
-        if ($this->verificaEspecialidadeDentista($DentistaEx, $Procedimento)) {
+    public function associaResponsavel(Dentista $DentistaEx, Procedimentos $Procedimento) {
+       
+      if ($this->verificaEspecialidadeDentista($DentistaEx, $Procedimento)) {
             $responsabilidades = new Responsabilidades($DentistaEx, $Procedimento);
             $this->execucao[] = $responsabilidades; 
-            return true;
+            return $responsabilidades;
         } else {
             echo "O dentista não possui a especialidade necessária para o procedimento.";
             return false;
         }
     }
+// leticia: alterei o metodo marcaConsulta
+    public function marcaConsulta(string $data, string $horario, int $duracao, Responsabilidades $responsabilidades) {
 
-    public function marcaConsulta(Paciente $paciente, $data, $horario, $duracao, Responsabilidades $responsabilidades) {
-        print ("Os seguintes procedimentos estão definidos no tratamento: \n");
-        for ($i = 0; $i < $orcamentoAssociado->getTamProc(); $i++) {
-            print ("($i+1) - " . $orcamentoAssociado->getProcedimento($i)->getNome() . "\n");
-        }
-        print ("Digite o número do procedimento escolhido: ");
-
-        $decisao = readline();
-        $decisao = $decisao - 1;
-
-        $c = new Consulta(
-            $paciente,
-            $DentistaEx,
-            $data,
-            $horario,
-            $duracao,
-            $orcamentoAssociado->getProcedimento($decisao)
-        );
-
-        $c->setResponsabilidades($responsabilidades);
-
+      $procedimentoEscolhido = $responsabilidades->getProcedimento();
+      $c = new Consulta($this->orcamentoAssociado->getPacienteAssociado(), $data, $horario, $duracao, $procedimentoEscolhido);
         return $c;
     }
+// alterei funcao finaliza procedimento
+    public function finalizaProcedimento(Responsabilidades $responsabilidades, string $dataConclusao) {
+        
+        $concluido = new Concluidos($responsabilidades->getDentistaEx(), $responsabilidades->getProcedimento(), $dataConclusao);
+        array_push ($this->concluidos, $concluido);
 
-    public function finalizaProcedimento(Responsabilidades $responsabilidades, $dataConclusao) {
-        if ($this->verificaEspecialidadeDentista($responsabilidades->getDentistaEx(), $responsabilidades->getProcedimento())) {
-            $concluido = new Concluidos($dataConclusao);
-            $this->Concluidos[] = $concluido;
-            return true;
-        } else {
-            return false;
-        }
+      if($responsabilidades->getDentistaEx() instanceof DentistaParceiro){
+        $responsabilidades->DentistaEx->addProcFeitos($concluido);
+      }
+    }
+  
+    static public function getFilename() {
+      return get_called_class()::$local_filename;
     }
 }

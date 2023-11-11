@@ -1,13 +1,13 @@
     <?php 
 
-include_once('../global.php');
+include_once('global.php');
 
 class Cliente extends Pessoa {
 
-    private $cpf;
-    static $local_filename = "Clientes.txt";
+    protected $cpf;
+    static $local_filename = "clientes.txt";
 
-    public function __construct($nome, $RG, $email, $telefone, $cpf) 
+    public function __construct(string $nome, string $RG, string $email, string $telefone, string $cpf) 
     {
         $this->nome=$nome;
         $this->RG=$RG;
@@ -16,16 +16,12 @@ class Cliente extends Pessoa {
         $this->cpf=$cpf;
     }
 
-    public function getNome ()
-    {
-      return $this->nome;
-    }
     public function getCpf ()
     {
       return $this->cpf;
     }
 
-    public function setCpf ($cpf)
+    public function setCpf (string $cpf)
     {
       $this->cpf = $cpf;
     }  
