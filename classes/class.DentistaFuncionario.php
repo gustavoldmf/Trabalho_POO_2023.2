@@ -8,7 +8,7 @@ class DentistaFuncionario extends Dentista {
     static $local_filename = "dentistaFuncionario.txt";
   
   
-    public function __construct (string $nome, string $RG, string $email, string $telefone, string $CRO, string $endereco, string $salario) 
+    public function __construct (string $nome, string $RG, string $email, string $telefone, string $CRO, string $endereco, float $salario) 
     {
         $this->nome=$nome;
         $this->RG=$RG;
@@ -25,7 +25,7 @@ class DentistaFuncionario extends Dentista {
       return $this->salario;
     }
 
-    public function setSalario (string $salario)
+    public function setSalario (float $salario)
     {
       $this->salario = $salario;
     }
