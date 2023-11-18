@@ -23,9 +23,9 @@ include_once('global.php');
        return self::$ptrInstance;
    }
 
-   public function addLogin(string $p_loginText ) {
-       array_push($this->login, $p_loginText);
-   }
+    public function LogOut(){
+      self::$ptrInstance == null;
+    }
 
      public function getUsuario(){
        return this->usuario;        
