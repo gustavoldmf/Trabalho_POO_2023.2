@@ -16,27 +16,27 @@ class Contabilidade extends persist {
 
   public function __construct($mesAno) {
       $this->mesAno = $mesAno;
-      $this->pagamentos = Pagamentos::getRecordsbyField ("mesAno", $mesAno);
+      $this->pagamentos = Pagamento::getRecordsbyField ("mesAno", $mesAno);
+    // pegar tratamento primeiro
       $this->dentista = DentistaParceiro::getRecordsbyField("mesAno", $mesAno);
-      $this->receita = calculaPagamento();
-      $this->despesa = calculaDespesa()
-      $this->lucro = calculaLucro();
+      // $this->receita = Contabilidade::calculaPagamento();
+      // $this->despesa = Contabilidade::calculaDespesa();
+      // $this->lucro = Contabilidade::calculaLucro();
     
   }
 
-  public function calculaPagamento() {
-
-      for (i=0; i<$this->pagamentos.length; i++) {
-        $receita = $receita + $this->pagamentos[i]->getValorPago();
+  static public function calculaPagamento() {
+      for ($i = 0; $i < count($pagamentos); $i++) {
+        $receita = $receita + $pagamentos[$i]->getValorPago();
       }
       return $receita;
   }
 
-  public function calculaDespesa(){
+  static public function calculaDespesa(){
 
     //salário de todos os dentistas parceiros
-    for (i=0; i<$this->dentista.length; i++) {
-        $despesa = $despesa + $this->dentista[i]->getTotalPagamento();
+    for ($i = 0; $i < count($dentista); $i++) {
+        $despesa = $despesa + $dentista[$i]->getTotalPagamento();
 
     }
     //salário do unico detista funcionario
@@ -44,9 +44,9 @@ class Contabilidade extends persist {
     return $despesa;
   }
 
-  public function calculaLucro(){
+  static public function calculaLucro(){
     $lucro = $receita - $despesa;
-    return $this->lucro;
+    return $lucro;
   }
 
   public function getLucro(){
