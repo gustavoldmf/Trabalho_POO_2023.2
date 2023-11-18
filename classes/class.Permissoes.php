@@ -10,16 +10,17 @@ class Permissoes extends persist {
     }
 
     public function verificaPermissao(Usuario $Usuario, string $Permissao) {
-        $Teste = $Usuario->getPerfil();
-        $vetor = $Teste->getPermissoes();
+        $perfil = $Usuario->getPerfil();
+        $permissoes = $perfil->getPermissoes();
     
-        foreach ($vetor as $permissaoUsuario) {
-            if ($permissaoUsuario === $Permissao) {
-                return true; // Encontrou a permissão desejada, retornando verdadeiro
-            }
-        }
-    
-        return false; // A permissão não foi encontrada, retornando falso
+       for (i<0; i<$permissoes.length; i++) {
+
+          if ($permissoes[i] == $Permissao) {
+            return true;
+          }
+         
+       }
+      return false;
     }
 
     static public function getFilename() {
