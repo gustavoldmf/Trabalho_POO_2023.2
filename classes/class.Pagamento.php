@@ -4,7 +4,7 @@ include_once('global.php');
 
 class Pagamento extends persist {
 
-    protected $valorPago, $dataPagamento, $metodoPagamento;
+    protected $valorPago, $dataPagamento, $mesAno, $metodoPagamento;
     static $local_filename = "Pagamento.txt";
 
     public function __construct(float $valorPago, string $dataPagamento, MetodoPagamento $metodoPagamento) 
@@ -42,8 +42,30 @@ class Pagamento extends persist {
     {
       $this->metodoPagamento = $metodoPagamento;
     }  
+  
+    public function getMesAno ()
+    {
+      return $this->mesAno;
+    }  
+  
+    public function setMesAno (string $mesAno)
+    {
+      $this->mesAno = $mesAno;
+    }  
+
+    public function defineMesAno ()
+  
+    {
+      $partes = explode("-",  $this->dataPagamento);
+      $mes = $partes[1];
+      $ano = $partes[2];
+      $dataReduzida = $mes . "-" . $ano;
+      $this->mesAno = $dataReduzida;
+      return $this->mesAno;
+    }  
 
     static public function getFilename() {
       return get_called_class()::$local_filename;
     }
 }
+
