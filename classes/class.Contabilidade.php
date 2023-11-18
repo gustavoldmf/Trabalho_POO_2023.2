@@ -6,7 +6,7 @@ class Contabilidade extends persist {
   
   protected $receita;
   protected $despesa;
-  protected int $dentistaFunc;
+  protected $dentista;
   protected $pagamentos;
   protected $funcionarios;
   protected $mesAno;   
