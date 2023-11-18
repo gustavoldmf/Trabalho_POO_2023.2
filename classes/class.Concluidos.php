@@ -11,6 +11,7 @@ class Concluidos extends Responsabilidades {
       $this->dentistaEx = $dentistaEx;
       $this->procedimento = $procedimento;
       $this->data = $data;
+      $this->mesAno = Concluidos::defineMesAno($data);
     }
 
     public function getdata() {
@@ -24,8 +25,8 @@ class Concluidos extends Responsabilidades {
       $mes = $partes[1];
       $ano = $partes[2];
       $dataReduzida = $mes . "-" . $ano;
-      $this->mesAno = $dataReduzida;
-      return $this->$dataReduzida;
+      $mesAno = $dataReduzida;
+      return $dataReduzida;
     }  
   
     public function setData(string $data) {
