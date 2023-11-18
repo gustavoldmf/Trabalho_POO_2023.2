@@ -5,6 +5,7 @@ include_once('global.php');
 class DentistaParceiro extends Dentista{
     protected $procedimentosFeitos = [];
     protected $habilitacoes = [];
+    protected $totalPagamento;
     static $local_filename = "dentistaParceiro.txt";
   
 
@@ -43,8 +44,20 @@ class DentistaParceiro extends Dentista{
       }
       }
     }
-    return $totalPagamento;
+    $this->totalPagamento = $totalPagamento;
     }
+
+  public function getTotalPagamento(){
+    return $this->totalPagamento;
+  }
+
+  public function getProcFeitos(){
+    return $this->procedimentosFeitos;
+  }
+
+  public function getHabilitacao(){
+    return $this->habilitacoes;
+  }
 
   static public function getFilename() {
       return get_called_class()::$local_filename;

@@ -22,8 +22,8 @@ echo $procedimento2;
 echo $procedimento3;*/
 
 // Criando instâncias de pacientes
-$paciente1 = new Paciente('Paciente 1', 'RG1', 'paciente1@example.com', '123456789', '1990-01-01');
-$paciente2 = new Paciente('Paciente 2', 'RG2', 'paciente2@example.com', '987654321', '1985-03-15');
+$paciente1 = new Paciente('Paciente 1', 'RG1', 'paciente1@example.com', '123456789', '01-01-1990');
+$paciente2 = new Paciente('Paciente 2', 'RG2', 'paciente2@example.com', '987654321', '15-03-1985');
 
 /*echo $paciente1;
 echo $paciente2;*/
@@ -34,20 +34,20 @@ $cliente2 = new Cliente('Cliente 2', 'RG2', 'cliente2@example.com', '123456789',
 $paciente1->AssociaCliente($cliente1);
 $paciente2->AssociaCliente($cliente2);
 
-echo $cliente1;
-echo $cliente2;
-echo $paciente1;
+//echo $cliente1;
+//echo $cliente2;
+//echo $paciente1;
 
 // Criando instâncias de dentistas
 $dentista1 = new DentistaParceiro('Dentista 1', 'Dentista RG1', 'dentista1@example.com', '111111111', 'CRO1', 'Endereço 1');
 $dentista2 = new DentistaFuncionario('Dentista 2', 'Dentista RG2', 'dentista2@example.com', '222222222', 'CRO2', 'Endereço 2', 10000);
-$dentista3 = new DentistaParceiro('Dentista 3', 'Dentista RG3', 'dentista3@example.com', '33333333333', 'CRO3', 'Endereço 3');
+// $dentista3 = new DentistaParceiro('Dentista 3', 'Dentista RG3', 'dentista3@example.com', '33333333333', 'CRO3', 'Endereço 3');
 
 // Adicionando especialidades aos dentistas
 $dentista1->addEspecialidadesDentista($odontopediatria);
 $dentista2->addEspecialidadesDentista($ortodontia);
 $dentista2->addEspecialidadesDentista($cirurgia);
-$dentista3->addEspecialidadesDentista($clinicaMedica);
+// $dentista3->addEspecialidadesDentista($clinicaMedica);
 
 /*echo $dentista1;
 echo $dentista2;*/
@@ -86,7 +86,7 @@ echo "Pagamento para Dentista 2: $pagamento\n";
 ?>*/
 
 // Criando uma consulta de avaliação
-$consultaAvaliacao = new ConsultaAvaliacao($paciente1, $dentista2, '2023-11-10', '10:00');
+$consultaAvaliacao = new ConsultaAvaliacao($paciente1, $dentista2, '10-11-2023', '10:00');
 
 //echo $consultaAvaliacao;
 
@@ -106,12 +106,12 @@ $tratamento = $orcamento->analiseAprovacao(1,0);
 
 //procedimento e dentista ok
 $responsavel1 = $tratamento->associaResponsavel($dentista2, $procedimento3);
-echo $responsavel1;
+//echo $responsavel1;
 //procedimento e dentista NÃO ok
 $responsavel2 = $tratamento->associaResponsavel($dentista1, $procedimento2);
 
 
-$dataConsulta = "2023-11-15";
+$dataConsulta = "15-11-2023";
 $horarioConsulta = "10:00";
 $duracaoConsulta = 60;
 $consulta = $tratamento->marcaConsulta($dataConsulta, $horarioConsulta, $duracaoConsulta, $responsavel1);
@@ -119,7 +119,36 @@ $consulta = $tratamento->marcaConsulta($dataConsulta, $horarioConsulta, $duracao
 /*echo $tratamento;
 echo $consulta;*/
 
-$dataConclusao = "2023-11-15";
+$dataConclusao = "15-11-2023";
 $tratamento->finalizaProcedimento($responsavel1, $dataConclusao);
 
 //echo $tratamento;
+
+
+////////// Teste Usuario //////////
+// $permissoes = array();
+// $perfil1 = new Perfil($permissoes);
+// $usuario1 = Usuario::criaUsuario("gustavolmf@gmail", "Gustavo", "12345", $perfil1);
+// print_r($usuario1);
+
+////////// Teste Contabilidade ////////////
+$metodoPagamento = new MetodoPagamento("PIX", 0);
+$pagamento1 = new Pagamento(230,"12-11=2023",$metodoPagamento);
+$pagamento1->defineMesAno("24-11-2023");
+$pagamento2 = new Pagamento(432,"24-11=2023",$metodoPagamento);
+$pagamento2->defineMesAno("26-11-2023");
+
+$habilitacao = new Habilitacao($odontopediatria, 0.4);
+$concluidos = new Concluidos($dentista1, $procedimento1, "13-11-2023");
+$concluidos->defineMesAno("13-11-2023");
+
+$dentista1->addProcFeitos($concluidos);
+$dentista1->addHabilitacao($habilitacao);
+$dentista1->CalcPagamento($dentista1->getProcFeitos(), $dentista1->getHabilitacao());
+
+
+$contabilidade = new Contabilidade("112023");
+$lucroMes = $contabilidade->getLucro();
+
+
+

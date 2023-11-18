@@ -1,5 +1,5 @@
     <?php 
-
+    
 include_once('global.php');
 
 class Pagamento extends persist {
@@ -12,7 +12,6 @@ class Pagamento extends persist {
         $this->valorPago=$valorPago;
         $this->dataPagamento=$dataPagamento;
         $this->metodoPagamento=$metodoPagamento;
-        $this->mesAno = defineMesAno($dataPagamento);
     }
 
     public function getValorPago ()
@@ -61,6 +60,7 @@ class Pagamento extends persist {
       $mes = $partes[1];
       $ano = $partes[2];
       $dataReduzida = $mes . "-" . $ano;
+      $this->mesAno = $dataReduzida;
       return $this->$dataReduzida;
     }  
 
