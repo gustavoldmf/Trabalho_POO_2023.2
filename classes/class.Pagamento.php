@@ -12,6 +12,7 @@ class Pagamento extends persist {
         $this->valorPago=$valorPago;
         $this->dataPagamento=$dataPagamento;
         $this->metodoPagamento=$metodoPagamento;
+        $this->mesAno = defineMesAno($dataPagamento);
     }
 
     public function getValorPago ()
@@ -53,15 +54,14 @@ class Pagamento extends persist {
       $this->mesAno = $mesAno;
     }  
 
-    public function defineMesAno ()
+    public function defineMesAno (string $data)
   
     {
-      $partes = explode("-",  $this->dataPagamento);
+      $partes = explode("-", $data);
       $mes = $partes[1];
       $ano = $partes[2];
       $dataReduzida = $mes . "-" . $ano;
-      $this->mesAno = $dataReduzida;
-      return $this->mesAno;
+      return $this->$dataReduzida;
     }  
 
     static public function getFilename() {
