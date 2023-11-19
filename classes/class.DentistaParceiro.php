@@ -5,7 +5,7 @@ include_once('global.php');
 class DentistaParceiro extends Dentista{
     protected $procedimentosFeitos = [];
     protected $habilitacoes = [];
-    protected $totalPagamento;
+    protected $pagamentos = [];
     static $local_filename = "dentistaParceiro.txt";
   
 
@@ -19,6 +19,7 @@ class DentistaParceiro extends Dentista{
         $this->especialidadesDentista = [];
         $this->procedimentosFeitos = [];
         $this->habilitacoes = [];
+        $this->pagamentos = [];
     }
 
     public function addProcFeitos(Concluidos $concluidos){
@@ -28,29 +29,13 @@ class DentistaParceiro extends Dentista{
     public function addHabilitacao(Habilitacao $habilitacao){
       array_push($this->habilitacoes, $habilitacao);
     }
-// leticia: alterei metodo calc pagamento - AINDA FALTA FAZER A FILTRAGEM DE DATAS
-    public function CalcPagamento(array $procFeitos, array $habilitacao) {
-      $totalPagamento = 0;
 
-    foreach ($procFeitos as $concluidos) {
-    $dataConclusao = $concluidos->getData();
-    $proc = $concluidos->getProcedimento();
-
-      foreach ($this->habilitacoes as $habilitacao) {
-      $especialidade = $habilitacao->getEspecialidade();
-      $comissao = $habilitacao->getComissao();
-      if ($especialidade->getNomeEspecialidade() === $proc->getEspecialidade()){
-            $pagamento = $comissao * $proc->getValorUnitario();
-              $totalPagamento += $pagamento;
-      }
-      }
-    }
-    $this->totalPagamento = $totalPagamento;
+    public function addPagamento(string $mesAno){
+        $pagamentoMes = new PagamentoMes ($mesAno);
+        $pagamentoMes->calcPagamento($this);
+        array_push($this->pagamentos, $pagamentoMes);
     }
 
-  public function getTotalPagamento(){
-    return $this->totalPagamento;
-  }
 
   public function getProcFeitos(){
     return $this->procedimentosFeitos;
@@ -60,8 +45,13 @@ class DentistaParceiro extends Dentista{
     return $this->habilitacoes;
   }
 
+  public function getPagamentos(){
+    return $this->pagamentos;
+  }
+
   static public function getFilename() {
       return get_called_class()::$local_filename;
   }
 
 }
+
