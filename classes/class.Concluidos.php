@@ -14,7 +14,7 @@ class Concluidos extends Responsabilidades {
       $this->mesAno = Concluidos::defineMesAno($data);
     }
 
-    public function getdata() {
+    public function getData() {
         return $this->data;
     }
 
@@ -41,3 +41,4 @@ class Concluidos extends Responsabilidades {
         return get_called_class()::$local_filename;
     }
 }
+
