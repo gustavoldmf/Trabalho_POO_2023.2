@@ -22,24 +22,25 @@ class DentistaParceiro extends Dentista{
     }
 
     public function addProcFeitos(Concluidos $concluidos){
-        $this->procedimentosFeitos[] = $concluidos;
+        array_push($this->procedimentosFeitos, $concluidos);
     }
 
     public function addHabilitacao(Habilitacao $habilitacao){
-        $this->habilitacoes[] = $habilitacao;
+      array_push($this->habilitacoes, $habilitacao);
     }
 // leticia: alterei metodo calc pagamento - AINDA FALTA FAZER A FILTRAGEM DE DATAS
     public function CalcPagamento(array $procFeitos, array $habilitacao) {
       $totalPagamento = 0;
 
-    foreach ($procFeitos as $concluido) {
-    $dataConclusao = $concluido->getData();
+    foreach ($procFeitos as $concluidos) {
+    $dataConclusao = $concluidos->getData();
+    $proc = $concluidos->getProcedimento();
 
       foreach ($this->habilitacoes as $habilitacao) {
       $especialidade = $habilitacao->getEspecialidade();
       $comissao = $habilitacao->getComissao();
-      if ($especialidade->getNomeEspecialidade() === $concluido->procedimento->getNomeEspecialidade()){
-            $pagamento = $comissao * $concluido->procedimento->getValorUnitario();
+      if ($especialidade->getNomeEspecialidade() === $proc->getEspecialidade()){
+            $pagamento = $comissao * $proc->getValorUnitario();
               $totalPagamento += $pagamento;
       }
       }
