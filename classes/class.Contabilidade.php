@@ -1,66 +1,59 @@
-  <?php 
+<?php
 
 include_once('global.php');
 
-class DentistaParceiro extends Dentista{
-    protected $procedimentosFeitos = [];
-    protected $habilitacoes = [];
-    protected $totalPagamento;
-    static $local_filename = "dentistaParceiro.txt";
+class Contabilidade extends persist {
+  
+  protected $receita;
+  protected $despesa;
+  protected $dentista;
+  protected $pagamentos;
+  protected $funcionarios;
+  protected $mesAno;   
+  protected $lucro;
+  
+  static $local_filename = "contabilidade.txt";
 
-
-    public function __construct(string $nome, string $RG, string $email, string $telefone, string $CRO, string $endereco){
-        $this->nome=$nome;
-        $this->RG=$RG;
-        $this->email=$email;
-        $this->telefone=$telefone;
-        $this->CRO=$CRO;
-        $this->endereco=$endereco;
-        $this->especialidadesDentista = [];
-        $this->procedimentosFeitos = [];
-        $this->habilitacoes = [];
-    }
-
-    public function addProcFeitos(Concluidos $concluidos){
-        $this->procedimentosFeitos[] = $concluidos;
-    }
-
-    public function addHabilitacao(Habilitacao $habilitacao){
-        $this->habilitacoes[] = $habilitacao;
-    }
-// leticia: alterei metodo calc pagamento - AINDA FALTA FAZER A FILTRAGEM DE DATAS
-    public function CalcPagamento(array $procFeitos, array $habilitacao) {
-      $totalPagamento = 0;
-
-    foreach ($procFeitos as $concluido) {
-    $dataConclusao = $concluido->getData();
-
-      foreach ($this->habilitacoes as $habilitacao) {
-      $especialidade = $habilitacao->getEspecialidade();
-      $comissao = $habilitacao->getComissao();
-      if ($especialidade->getNomeEspecialidade() === $concluido->procedimento->getEspecialidade()){
-            $pagamento = $comissao * $concluido->procedimento->getValorUnitario();
-              $totalPagamento += $pagamento;
-      }
-      }
-    }
-    $this->totalPagamento = $totalPagamento;
-    }
-
-  public function getTotalPagamento(){
-    return $this->totalPagamento;
+  public function __construct($mesAno) {
+      $this->mesAno = $mesAno;
+      $this->pagamentos = Pagamento::getRecordsbyField ("mesAno", $mesAno);
+    // pegar tratamento primeiro
+      $this->dentista = DentistaParceiro::getRecordsbyField("mesAno", $mesAno);
+      // $this->receita = Contabilidade::calculaPagamento();
+      // $this->despesa = Contabilidade::calculaDespesa();
+      // $this->lucro = Contabilidade::calculaLucro();
+    
   }
 
-  public function getProcFeitos(){
-    return $this->procedimentosFeitos;
+  static public function calculaPagamento() {
+      for ($i = 0; $i < count($pagamentos); $i++) {
+        $receita = $receita + $pagamentos[$i]->getValorPago();
+      }
+      return $receita;
   }
 
-  public function getHabilitacao(){
-    return $this->habilitacoes;
+  static public function calculaDespesa(){
+
+    //salário de todos os dentistas parceiros
+    for ($i = 0; $i < count($dentista); $i++) {
+        $despesa = $despesa + $dentista[$i]->getTotalPagamento();
+
+    }
+    //salário do unico detista funcionario
+    $despesa = $despesa + 5000;
+    return $despesa;
+  }
+
+  static public function calculaLucro(){
+    $lucro = $receita - $despesa;
+    return $lucro;
+  }
+
+  public function getLucro(){
+  return $this->lucro;
   }
 
   static public function getFilename() {
       return get_called_class()::$local_filename;
   }
-
 }
