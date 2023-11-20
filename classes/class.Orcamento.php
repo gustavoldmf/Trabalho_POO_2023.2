@@ -91,17 +91,31 @@ class Orcamento extends persist{
 
     public function analiseAprovacao (int $formaPgto, int $parcelas)
     {
-      if ($formaPgto === 1 or $formaPgto === 2 or $formaPgto === 3){
+      if ($formaPgto >= 1 and $formaPgto <= 4) {
         
         if ($formaPgto === 1){
-          $tipoPgto = 'Dinheiro a vista';
-        } else if ($formaPgto === 2){
-          $tipoPgto = 'Cartao de credito a vista';
-        } else if ($formaPgto === 3){
-          $tipoPgto = 'Parcelado no cartao de '.$parcelas.' vezes' ;
+          $tipoPgto = "Dinheiro à vista";
+        } 
+        else if ($formaPgto === 2){
+          $tipoPgto = "PIX";
+        } 
+        else if ($formaPgto === 3){
+          $tipoPgto = "Cartão de débito";
+        } 
+        else if ($formaPgto === 4){
+          if ($parcelas === 1){
+            $tipoPgto = "Cartão de crédito à vista";
+          } 
+          else if ($parcelas >= 2 and $parcelas <= 6){
+            $tipoPgto = "Parcelado em ".$parcelas." vezes no cartão";
+          }
+          else {
+            print "Forma de pagamento invalida";
+            return false;
+          }
         }
         
-         $Tratamento = new Tratamento($this, $tipoPgto);
+        $Tratamento = new Tratamento($this, $tipoPgto);
           return $Tratamento;
 
       } else {
