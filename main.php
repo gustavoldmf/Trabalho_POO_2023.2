@@ -1,6 +1,7 @@
 <?php 
 
 include_once('global.php');
+include_once ('setup.php');
 
 // Criando instâncias de especialidades
 $odontopediatria = new Especialidade('Odontopediatria');
@@ -135,10 +136,11 @@ $tratamento->finalizaProcedimento($responsavel1, $dataConclusao);
 
 
 
-$metodoPagamento = new MetodoPagamento("PIX", 0);
+//$metodoPagamento = new MetodoPagamento("PIX", 0);
+$metodoPagamento1 = new MetodoPagamento("Cartao a vista", 0.5);
 $pagamento1 = new Pagamento(230,"12-11-2023",$metodoPagamento);
 $pagamento1->save();
-$pagamento2 = new Pagamento(432,"24-11-2023",$metodoPagamento);
+$pagamento2 = new Pagamento(432,"24-11-2023",$metodoPagamento1);
 $pagamento2->save();
 
 $habilitacao = new Habilitacao($odontopediatria, 0.4);
@@ -160,10 +162,13 @@ $testando = Pagamento::getRecordsbyField ("mesAno", $mesAno);
 // print_r($testando);
 
 $contabilidade = new Contabilidade("11-2023");
-$contabilidade->calculaPagamento();
-// $contabilidade->calculaDespesa();
-// $contabilidade->calculaLucro();
-$lucroMes = $contabilidade->getLucro();
+$receita = $contabilidade->calculaPagamento();
+echo "Receita: $receita \n";
+$despesas = $contabilidade->calculaDespesa();
+echo "Despesas: $despesas \n";
+$lucro = $contabilidade->calculaLucro();
+echo "Lucro: $lucro \n";
+// $lucroMes = $contabilidade->getLucro();
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
