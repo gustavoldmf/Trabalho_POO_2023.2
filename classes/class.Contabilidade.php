@@ -7,7 +7,8 @@ class Contabilidade extends persist {
   protected $receita;
   protected $despesa;
   protected $dentista;
-  protected $pagamentos;
+  protected $pagReceita;
+  protected $pagDespesa;
   protected $funcionarios;
   protected $mesAno;   
   protected $lucro;
@@ -16,18 +17,18 @@ class Contabilidade extends persist {
 
   public function __construct($mesAno) {
       $this->mesAno = $mesAno;
-      $this->pagamentos = Pagamento::getRecordsbyField ("mesAno", $mesAno);
-    // pegar tratamento primeiro
-      $this->dentista = DentistaParceiro::getRecordsbyField("mesAno", $mesAno);
+      $this->pagReceita = Pagamento::getRecordsbyField ("mesAno", $mesAno);
+      $this->dentista = DentistaParceiro::getRecords();
+      $this->pagDespesa = PagamentoMes::getRecordsByField("mesAno", $mesAno);
       // $this->receita = Contabilidade::calculaPagamento();
       // $this->despesa = Contabilidade::calculaDespesa();
       // $this->lucro = Contabilidade::calculaLucro();
     
   }
 
-  static public function calculaPagamento() {
-      for ($i = 0; $i < count($pagamentos); $i++) {
-        $receita = $receita + $pagamentos[$i]->getValorPago();
+  public function calculaPagamento() {
+      for ($i = 0; $i < count($pagReceita); $i++) {
+        $receita = $receita + $pagReceita[$i]->getValorPago();
       }
       return $receita;
   }
@@ -35,16 +36,19 @@ class Contabilidade extends persist {
   static public function calculaDespesa(){
 
     //salário de todos os dentistas parceiros
-    for ($i = 0; $i < count($dentista); $i++) {
-        $despesa = $despesa + $dentista[$i]->getTotalPagamento();
+    for($j = 0; $j < count($dentista); $j++){
+    for ($i = 0; $i < count($pagDespesa); $i++) {
+      $pagDespesa[$i]->calcPagamento($dentista[$j]);
+      $despesa = $despesa + $pagDespesa[$i]->getValorPagamento();
 
+    }
     }
     //salário do unico detista funcionario
     $despesa = $despesa + 5000;
     return $despesa;
   }
 
-  static public function calculaLucro(){
+  public function calculaLucro(){
     $lucro = $receita - $despesa;
     return $lucro;
   }

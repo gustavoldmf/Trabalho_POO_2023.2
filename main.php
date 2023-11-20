@@ -132,23 +132,41 @@ $tratamento->finalizaProcedimento($responsavel1, $dataConclusao);
 // print_r($usuario1);
 
 ////////// Teste Contabilidade ////////////
+
+
+
 $metodoPagamento = new MetodoPagamento("PIX", 0);
 $pagamento1 = new Pagamento(230,"12-11-2023",$metodoPagamento);
-$pagamento1->defineMesAno("24-11-2023");
+$pagamento1->save();
 $pagamento2 = new Pagamento(432,"24-11-2023",$metodoPagamento);
-$pagamento2->defineMesAno("26-11-2023");
+$pagamento2->save();
 
 $habilitacao = new Habilitacao($odontopediatria, 0.4);
 $concluidos = new Concluidos($dentista1, $procedimento1, "13-11-2023");
-$concluidos->defineMesAno("13-11-2023");
+
 
 $dentista1->addProcFeitos($concluidos);
 $dentista1->addHabilitacao($habilitacao);
+$dentista1->save();
 //$dentista1->CalcPagamento($dentista1->getProcFeitos(), $dentista1->getHabilitacao());
 
+$pagamentoOutubro = new PagamentoMes("10-2023");
+$pagamentoOutubro->save();
+$pagamentoNovembro = new PagamentoMes("11-2023");
+$pagamentoNovembro->save();
 
-$contabilidade = new Contabilidade("112023");
+$mesAno = "11-2023";
+$testando = Pagamento::getRecordsbyField ("mesAno", $mesAno);
+// print_r($testando);
+
+$contabilidade = new Contabilidade("11-2023");
+$contabilidade->calculaPagamento();
+// $contabilidade->calculaDespesa();
+// $contabilidade->calculaLucro();
 $lucroMes = $contabilidade->getLucro();
+
+////////////////////////////////////////////////////////////////////////////////////////
+
 
 // -------------------------------------- Roteiro de Testes --------------------------------------
 
