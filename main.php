@@ -1,4 +1,4 @@
-    <?php 
+<?php 
 
 include_once('global.php');
 
@@ -133,9 +133,9 @@ $tratamento->finalizaProcedimento($responsavel1, $dataConclusao);
 
 ////////// Teste Contabilidade ////////////
 $metodoPagamento = new MetodoPagamento("PIX", 0);
-$pagamento1 = new Pagamento(230,"12-11=2023",$metodoPagamento);
+$pagamento1 = new Pagamento(230,"12-11-2023",$metodoPagamento);
 $pagamento1->defineMesAno("24-11-2023");
-$pagamento2 = new Pagamento(432,"24-11=2023",$metodoPagamento);
+$pagamento2 = new Pagamento(432,"24-11-2023",$metodoPagamento);
 $pagamento2->defineMesAno("26-11-2023");
 
 $habilitacao = new Habilitacao($odontopediatria, 0.4);
@@ -144,11 +144,85 @@ $concluidos->defineMesAno("13-11-2023");
 
 $dentista1->addProcFeitos($concluidos);
 $dentista1->addHabilitacao($habilitacao);
-$dentista1->CalcPagamento($dentista1->getProcFeitos(), $dentista1->getHabilitacao());
+//$dentista1->CalcPagamento($dentista1->getProcFeitos(), $dentista1->getHabilitacao());
 
 
 $contabilidade = new Contabilidade("112023");
 $lucroMes = $contabilidade->getLucro();
 
+// -------------------------------------- Roteiro de Testes --------------------------------------
 
+// Criando Especialidades
+$clinicaGeral = new Especialidade ("Clínica Geral");
+$endodontia = new Especialidade("Endodontia");
+$cirurgia = new Especialidade ("Cirurgia");
+$estetica = new Especialidade("Estética");
 
+// Criando Procedimentos
+$limpeza = new Procedimentos("Limpeza", "", 200.0, $clinicaGeral);
+$restauracao = new Procedimentos("Restauração", "", 185.0, $clinicaGeral);
+$extracaoComum = new Procedimentos("Extração Comum", "Não inclui dente siso.", 280.0, $clinicaGeral);
+
+$canal = new Procedimentos("Canal", "", 800.0, $endodontia);
+
+$extracaoSiso = new Procedimentos("Extração de Siso", "Valor por dente.", 400.0, $cirurgia);
+
+$clareamentoLaser = new Procedimentos("Clareamento a Laser", "", 1700.0, $estetica);
+$clareamentoMoldeira = new Procedimentos("Clareamento de moldeira", "Clareamento caseiro.", 900.0, $estetica);
+
+// echo $limpeza;
+// echo $restauracao;
+// echo $extracaoComum;
+// echo $canal;
+// echo $extracaoSiso;
+// echo $clareamentoLaser;
+// echo $clareamentoMoldeira;
+
+// Teste Métodos de Pagamento
+$aVista = new MetodoPagamento("Dinheiro à Vista", 0);
+$pix = new MetodoPagamento("PIX", 0);
+$debito = new MetodoPagamento("Débito", 0.03);
+$credito1 = new MetodoPagamento("1x no Crédito", 0.04);
+$credito2 = new MetodoPagamento("2x no Crédito", 0.04);
+$credito3 = new MetodoPagamento("3x no Crédito", 0.04);
+$credito4 = new MetodoPagamento("4x no Crédito", 0.07);
+$credito5 = new MetodoPagamento("5x no Crédito", 0.07);
+$credito6 = new MetodoPagamento("6x no Crédito", 0.07);
+
+// echo $aVista;
+// echo $pix;
+// echo $debito;
+// echo $credito1;
+// echo $credito2;
+// echo $credito3;
+// echo $credito4;
+// echo $credito5;
+// echo $credito6;
+
+// Criando Dentistas
+$dentistaF = new DentistaFuncionario("Lucas", "36.176.562-9", "lucas@clinico.com", "(31) 99935-2324", "MG-95687", "Rua dos Angelins, nº 560", 5000.00);
+$dentistaP = new DentistaParceiro("Marcos", "29.933.390-5", "marcos@clinico.com", "(31) 99104-6045", "MG-20541", "Praça Doutor Jésus Benigno, nº 412");
+
+// Adicionando Especialidades aos Dentistas
+$dentistaF->addEspecialidadesDentista($clinicaGeral);
+$dentistaF->addEspecialidadesDentista($endodontia);
+$dentistaF->addEspecialidadesDentista($cirurgia);
+$dentistaP->addEspecialidadesDentista($clinicaGeral);
+$dentistaP->addEspecialidadesDentista($estetica);
+
+// Adicionando Percentual de Participação ao Dentista Parceiro
+$habilitacao1 = new Habilitacao($clinicaGeral, 0.4);
+$dentistaP->addHabilitacao($habilitacao1);
+$habilitacao2 = new Habilitacao($estetica, 0.4);
+$dentistaP->addHabilitacao($habilitacao2);
+
+// echo $dentistaF;
+// echo $dentistaP;
+
+// Cadastro Paciente e Cliente
+$paciente = new Paciente("Davi", "35.513.588-7", "davi@gmail.com", "(31) 99318-1787", "19-05-2001");
+$cliente = new Cliente("Sara", "21.026.601-6", "ester@gmail.com", "(31) 98709-1653", "909.809.016-85");
+$paciente->AssociaCliente($cliente);
+
+// echo $paciente;
+// echo $cliente;
