@@ -2,12 +2,13 @@
 
 include_once('global.php');
 
-class Usuario {
+class Usuario extends persist {
     protected $email;
     protected $nome;
     private $senha;
     protected $Perfil;
-
+    static $local_filename = "perfil.txt";
+  
     public function __construct(string $email, string $nome, string $senha, Perfil $Perfil) {
         $this->email = $email;
         $this->nome = $nome;
@@ -38,4 +39,13 @@ class Usuario {
     public function getSenha() {
         return $this->senha;
     }
+
+    public function getPerfil() {
+        return $this->Perfil;
+    }
+  
+    static public function getFilename() {
+        return get_called_class()::$local_filename;
+  }
+  
 }
