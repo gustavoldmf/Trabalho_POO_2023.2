@@ -87,41 +87,41 @@ echo "Pagamento para Dentista 2: $pagamento\n";
 ?>*/
 
 // Criando uma consulta de avaliação
-$consultaAvaliacao = new ConsultaAvaliacao($paciente1, $dentista2, '10-11-2023', '10:00');
+// $consultaAvaliacao = new ConsultaAvaliacao($paciente1, $dentista2, '10-11-2023', '10:00');
 
-//echo $consultaAvaliacao;
+// //echo $consultaAvaliacao;
 
-// Criando um orçamento com base na consulta de avaliação
-$orcamento = $consultaAvaliacao->criaOrcamento();
-$orcamento->addProcedimento($procedimento1);
-$orcamento->addDetalhamento('Detalhamento 1');
-$orcamento->addProcedimento($procedimento2);
-$orcamento->addDetalhamento('Detalhamento 2');
-$orcamento->addProcedimento($procedimento3);
-$orcamento->addDetalhamento('Detalhamento 3');
-$orcamento->calculaOrcamento();
-$tratamento = $orcamento->analiseAprovacao(1,0);
+// // Criando um orçamento com base na consulta de avaliação
+// $orcamento = $consultaAvaliacao->criaOrcamento();
+// $orcamento->addProcedimento($procedimento1);
+// $orcamento->addDetalhamento('Detalhamento 1');
+// $orcamento->addProcedimento($procedimento2);
+// $orcamento->addDetalhamento('Detalhamento 2');
+// $orcamento->addProcedimento($procedimento3);
+// $orcamento->addDetalhamento('Detalhamento 3');
+// $orcamento->calculaOrcamento();
+// $tratamento = $orcamento->analiseAprovacao(1,0);
 
-//echo $orcamento;
-
-
-//procedimento e dentista ok
-$responsavel1 = $tratamento->associaResponsavel($dentista2, $procedimento3);
-//echo $responsavel1;
-//procedimento e dentista NÃO ok
-$responsavel2 = $tratamento->associaResponsavel($dentista1, $procedimento2);
+// //echo $orcamento;
 
 
-$dataConsulta = "15-11-2023";
-$horarioConsulta = "10:00";
-$duracaoConsulta = 60;
-$consulta = $tratamento->marcaConsulta($dataConsulta, $horarioConsulta, $duracaoConsulta, $responsavel1);
+// //procedimento e dentista ok
+// $responsavel1 = $tratamento->associaResponsavel($dentista2, $procedimento3);
+// //echo $responsavel1;
+// //procedimento e dentista NÃO ok
+// $responsavel2 = $tratamento->associaResponsavel($dentista1, $procedimento2);
+
+
+// $dataConsulta = "15-11-2023";
+// $horarioConsulta = "10:00";
+// $duracaoConsulta = 60;
+// $consulta = $tratamento->marcaConsulta($dataConsulta, $horarioConsulta, $duracaoConsulta, $responsavel1);
 
 /*echo $tratamento;
 echo $consulta;*/
 
 $dataConclusao = "15-11-2023";
-$tratamento->finalizaProcedimento($responsavel1, $dataConclusao);
+// $tratamento->finalizaProcedimento($responsavel1, $dataConclusao);
 
 //echo $tratamento;
 
@@ -267,8 +267,69 @@ $dentistaP->addHabilitacao($habilitacao2);
 
 // Cadastro Paciente e Cliente
 $paciente = new Paciente("Davi", "35.513.588-7", "davi@gmail.com", "(31) 99318-1787", "19-05-2001");
-$cliente = new Cliente("Sara", "21.026.601-6", "ester@gmail.com", "(31) 98709-1653", "909.809.016-85");
+$cliente = new Cliente("Sara", "21.026.601-6", "sara@gmail.com", "(31) 98709-1653", "909.809.016-85");
 $paciente->AssociaCliente($cliente);
 
 // echo $paciente;
 // echo $cliente;
+
+// Criando Consulta de Avaliação
+$consultaAvaliacao = new ConsultaAvaliacao($paciente, $dentistaP, "06-11-2023", "14:00");
+
+// echo $consultaAvaliacao;
+
+// Criando Orçamento e Aprovação
+$orcamento = $consultaAvaliacao->criaOrcamento();
+$orcamento->addProcedimento($limpeza);
+$orcamento->addDetalhamento("Detalhamento 1");
+$orcamento->addProcedimento($clareamentoLaser);
+$orcamento->addDetalhamento("Detalhamento 2");
+$orcamento->addProcedimento($restauracao);
+$orcamento->addDetalhamento("Detalhamento 3");
+$orcamento->calculaOrcamento();
+$tratamento = $orcamento->analiseAprovacao(2,0);
+
+// echo $orcamento;
+// echo $tratamento;
+
+// $tratamento1 = $orcamento->analiseAprovacao(1,0);
+// $tratamento2 = $orcamento->analiseAprovacao(2,5);
+// $tratamento3 = $orcamento->analiseAprovacao(4,0);
+// $tratamento4 = $orcamento->analiseAprovacao(4,1);
+// $tratamento5 = $orcamento->analiseAprovacao(4,3);
+// $tratamento6 = $orcamento->analiseAprovacao(4,7);
+// $tratamento7 = $orcamento->analiseAprovacao(5,7);
+// $tratamento8 = $orcamento->analiseAprovacao(4.3,4);
+
+// echo $tratamento1;
+// echo $tratamento2;
+// echo $tratamento3;
+// echo $tratamento4;
+// echo $tratamento5;
+// echo $tratamento6;
+// echo $tratamento7;
+// echo $tratamento8;
+
+// Associando Dentista ao Procedimento ok
+$responsavel1 = $tratamento->associaResponsavel($dentistaF, $limpeza);
+$responsavel2 = $tratamento->associaResponsavel($dentistaP, $clareamentoLaser);
+$responsavel3 = $tratamento->associaResponsavel($dentistaF, $restauracao);
+
+// echo $responsavel1;
+// echo $responsavel2;
+// echo $responsavel3;
+
+// Teste Procedimento e Dentista NÃO ok
+// $responsavel4 = $tratamento->associaResponsavel($dentistaF, $clareamentoLaser);
+// echo $responsavel4;
+
+// Criando Consultas
+$consulta1 = $tratamento->marcaConsulta("10-11-2023", "09:00", "30 minutos", $responsavel1);
+$consulta2 = $tratamento->marcaConsulta("15-11-2023", "15:00", "50 minutos", $responsavel2);
+$consulta3 = $tratamento->marcaConsulta("20-11-2023", "10:30", "60 minutos", $responsavel3);
+$consulta4 = $tratamento->marcaConsulta("27-11-2023", "14:00", "60 minutos", $responsavel3);
+
+// echo $consulta1;
+// echo $consulta2;
+// echo $consulta3;
+// echo $consulta4;
