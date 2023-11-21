@@ -52,18 +52,19 @@ class Tratamento extends persist {
             $this->execucao[] = $responsabilidades; 
             return $responsabilidades;
         } else {
-            echo "O dentista não possui a especialidade necessária para o procedimento.";
+            echo "\nO dentista não possui a especialidade necessária para o procedimento.\n";
             return false;
         }
     }
-// leticia: alterei o metodo marcaConsulta
-    public function marcaConsulta(string $data, string $horario, int $duracao, Responsabilidades $responsabilidades) {
+
+    public function marcaConsulta(string $data, string $horario, string $duracao, Responsabilidades $responsabilidades) {
 
       $procedimentoEscolhido = $responsabilidades->getProcedimento();
-      $c = new Consulta($this->orcamentoAssociado->getPacienteAssociado(), $data, $horario, $duracao, $procedimentoEscolhido);
-        return $c;
+      $dentistaExecutor = $responsabilidades->getDentistaEx();
+      $c = new Consulta($this->orcamentoAssociado->getPacienteAssociado(), $dentistaExecutor, $data, $horario, $duracao, $procedimentoEscolhido);
+      return $c;
     }
-// alterei funcao finaliza procedimento
+
     public function finalizaProcedimento(Responsabilidades $responsabilidades, string $dataConclusao) {
         
         $concluido = new Concluidos($responsabilidades->getDentistaEx(), $responsabilidades->getProcedimento(), $dataConclusao);
