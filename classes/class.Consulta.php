@@ -2,13 +2,13 @@
 include_once('global.php');
 class Consulta extends persist{
 
-  // leticia: retirei o dentistaExe da classe consulta, conforme mudança no último sprint
-  protected $paciente, $dataC, $horarioC, $duracaoC, $procedimentoC;
+  protected $paciente, $dentistaEx, $dataC, $horarioC, $duracaoC, $procedimentoC;
   static $local_filename = "consulta.txt";
 
-  public function __construct(Paciente $paciente, string $dataC, string $horarioC, int $duracaoC, Procedimentos $procedimentoC)
+  public function __construct(Paciente $paciente, Dentista $dentistaEx, string $dataC, string $horarioC, string $duracaoC, Procedimentos $procedimentoC)
   {
       $this->paciente = $paciente;
+      $this->dentistaEx = $dentistaEx;
       $this->dataC = $dataC;
       $this->horarioC = $horarioC;
       $this->duracaoC = $duracaoC;
@@ -23,6 +23,16 @@ class Consulta extends persist{
   public function setPaciente(Paciente $paciente)
   {
     $this->paciente = $paciente;
+  }
+
+  public function getDentista()
+  {
+    return $this->dentistaEx;
+  }
+
+  public function setDentista(Dentista $dentistaEx)
+  {
+    $this->dentistaEx = $dentistaEx;
   }
 
   public function getDataC()
@@ -50,7 +60,7 @@ class Consulta extends persist{
     return $this->duracaoC;
   }
 
-  public function setDuracaoC(int $duracaoC)
+  public function setDuracaoC(string $duracaoC)
   {
     $this->duracaoC = $duracaoC;
   }
