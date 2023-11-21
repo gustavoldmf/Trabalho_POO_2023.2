@@ -22,16 +22,13 @@ class Usuario {
         }
     }
 
-    public function verificaLogin(string $email, string $senha) {
-        $emailExiste = Login::getRecordsByField("email", $email);
-
-        if ($emailExiste != null) {
-            if ($senha == Login::getIntance()->getUsuario()->getSenha()) {
-                return true;
-            } else {
-                return false;
-            }
+    public function verificaLogin() {
+      $verifica = Login::getInstance();
+        if($verifica == null){
+            return false;
         }
+        else 
+            return true;
     }
 
     public function getEmail() {

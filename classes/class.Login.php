@@ -1,4 +1,4 @@
-    <?php 
+<?php 
 
 include_once('global.php');
 
@@ -16,11 +16,15 @@ include_once('global.php');
         $this->usuario = $Usuario;
     }
 
-   static function getInstance(Usuario $Usuario) {
+   static function Instance(Usuario $Usuario) {
        if ( self::$ptrInstance == null )
           self::$ptrInstance = new Login($Usuario);
 
        return self::$ptrInstance;
+   }
+
+   static function getInstance(){
+     return self::ptrInstance;
    }
 
     public function LogOut(){
