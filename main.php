@@ -286,6 +286,8 @@ $orcamento->addProcedimento($clareamentoLaser);
 $orcamento->addDetalhamento("Detalhamento 2");
 $orcamento->addProcedimento($restauracao);
 $orcamento->addDetalhamento("Detalhamento 3");
+$orcamento->addProcedimento($restauracao);
+$orcamento->addDetalhamento("Detalhamento 4");
 $orcamento->calculaOrcamento();
 $tratamento = $orcamento->analiseAprovacao(2,0);
 
@@ -314,22 +316,26 @@ $tratamento = $orcamento->analiseAprovacao(2,0);
 $responsavel1 = $tratamento->associaResponsavel($dentistaF, $limpeza);
 $responsavel2 = $tratamento->associaResponsavel($dentistaP, $clareamentoLaser);
 $responsavel3 = $tratamento->associaResponsavel($dentistaF, $restauracao);
+$responsavel4 = $tratamento->associaResponsavel($dentistaP, $restauracao);
 
 // echo $responsavel1;
 // echo $responsavel2;
 // echo $responsavel3;
+// echo $responsavel4;
 
 // Teste Procedimento e Dentista NÃO ok
-// $responsavel4 = $tratamento->associaResponsavel($dentistaF, $clareamentoLaser);
-// echo $responsavel4;
+// $responsavel5 = $tratamento->associaResponsavel($dentistaF, $clareamentoLaser);
+// echo $responsavel5;
 
 // Criando Consultas
 $consulta1 = $tratamento->marcaConsulta("10-11-2023", "09:00", "30 minutos", $responsavel1);
-$consulta2 = $tratamento->marcaConsulta("15-11-2023", "15:00", "50 minutos", $responsavel2);
-$consulta3 = $tratamento->marcaConsulta("20-11-2023", "10:30", "60 minutos", $responsavel3);
-$consulta4 = $tratamento->marcaConsulta("27-11-2023", "14:00", "60 minutos", $responsavel3);
+$consulta2 = $tratamento->marcaConsulta("15-11-2023", "15:00", "60 minutos", $responsavel2);
+$consulta3 = $tratamento->marcaConsulta("20-11-2023", "10:00", "60 minutos", $responsavel2);
+$consulta4 = $tratamento->marcaConsulta("24-11-2023", "10:30", "45 minutos", $responsavel3);
+$consulta5 = $tratamento->marcaConsulta("27-11-2023", "14:00", "45 minutos", $responsavel4);
 
 // echo $consulta1;
 // echo $consulta2;
 // echo $consulta3;
 // echo $consulta4;
+// echo $consulta5;
