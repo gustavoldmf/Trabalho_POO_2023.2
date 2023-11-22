@@ -2,7 +2,7 @@
 
 include_once('global.php');
 
- class Login extends persist{ 
+ class Login extends persist{  
    
     private string $folder = 'dataFiles';
     private string $filename;
@@ -51,12 +51,16 @@ include_once('global.php');
       $this->save();
       return self::$ptrInstance;
     }
+    
+    public function getLogado(){
+      return $this->logado;
+    }
 
-     public function getUsuario(){
+    public function getUsuario(){
        return $this->usuario;        
     }
 
-     static public function getFilename() {
+    static public function getFilename() {
          return get_called_class()::$local_filename;
      }
 }

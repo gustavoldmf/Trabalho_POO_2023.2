@@ -24,12 +24,13 @@ class Usuario extends persist {
     }
 
     public function verificaLogin() {
-      $verifica = Login::getInstance();
-        if($verifica == null){
-            return false;
+    
+      $verifica = Login::getRecordsByField("logado", 1);
+        if($verifica->getLogado() == 1){
+            return true;
         }
         else 
-            return true;
+            return false;
     }
 
     public function getEmail() {

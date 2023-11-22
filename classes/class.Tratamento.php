@@ -47,9 +47,9 @@ class Tratamento extends persist {
 
     public function associaResponsavel(Dentista $DentistaEx, Procedimentos $Procedimento) {
        $login1 = Login::getRecordsbyField("logado", 1);
-       $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+       $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
 
-       if (permissao === true){
+       if ($permissao === true){
       if ($this->verificaEspecialidadeDentista($DentistaEx, $Procedimento)) {
             $responsabilidades = new Responsabilidades($DentistaEx, $Procedimento);
             $this->execucao[] = $responsabilidades; 
@@ -59,13 +59,13 @@ class Tratamento extends persist {
             return false;
         }
        } else {
-        echo "Voce nao tem permissao para realizar esta acao"
+        echo "Voce nao tem permissao para realizar esta acao";
       }
     }
 
     public function marcaConsulta(string $data, string $horario, string $duracao, Responsabilidades $responsabilidades) {
       $login1 = Login::getRecordsbyField("logado", 1);
-       $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+       $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
 
        if (permissao === true){
 
@@ -74,15 +74,15 @@ class Tratamento extends persist {
       $c = new Consulta($this->orcamentoAssociado->getPacienteAssociado(), $dentistaExecutor, $data, $horario, $duracao, $procedimentoEscolhido);
       return $c;
        } else {
-        echo "Voce nao tem permissao para realizar esta acao"
+        echo "Voce nao tem permissao para realizar esta acao";
       }
     }
 
     public function finalizaProcedimento(Responsabilidades $responsabilidades, string $dataConclusao) {
       $login1 = Login::getRecordsbyField("logado", 1);
-       $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+       $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
 
-       if (permissao === true){
+       if ($permissao === true){
         
         $concluido = new Concluidos($responsabilidades->getDentistaEx(), $responsabilidades->getProcedimento(), $dataConclusao);
         array_push ($this->concluidos, $concluido);
@@ -91,7 +91,7 @@ class Tratamento extends persist {
         $responsabilidades->DentistaEx->addProcFeitos($concluido);
         }
       } else {
-        echo "Voce nao tem permissao para realizar esta acao"
+        echo "Voce nao tem permissao para realizar esta acao";
       }
     }
   
