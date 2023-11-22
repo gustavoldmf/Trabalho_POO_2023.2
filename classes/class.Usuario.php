@@ -23,16 +23,6 @@ class Usuario extends persist {
         }
     }
 
-    public function verificaLogin() {
-      $verifica = Login::getRecordsByField("logado", 1);
-      if($verifica->getLogado() == 1){
-          return true;
-      }
-      else 
-      return false;
-      
-    }
-
     public function getEmail() {
         return $this->email;
     }

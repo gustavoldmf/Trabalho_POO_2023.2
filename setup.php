@@ -4,11 +4,19 @@ include_once('global.php');
 
 // Criando Usuários
 $admin = array("criaOrcamento", "calculaPagamento",
-"calculaDespesa", "calculaLucro", "addEspecialidadeDentista", "addProcFeitos", "addHabilitacao", "calcPagamento", "addProcedimento", "addDetalhamento", "associaResponsavel", "DesassociaCliente", "exibeInfo", "associaResponsavel", "marcaConsulta", "finalizaProcedimento", "criaUsuario", "verificaPermissao", "addEspecialidadesDentista", "AssociaCliente");
+"calculaDespesa", "calculaLucro", "addEspecialidadeDentista",
+ "addProcFeitos", "addHabilitacao", "calcPagamento", "addProcedimento",
+  "addDetalhamento", "associaResponsavel", "DesassociaCliente", "exibeInfo",
+   "associaResponsavel", "marcaConsulta", "finalizaProcedimento", "criaUsuario",
+    "verificaPermissao", "addEspecialidadesDentista", "AssociaCliente");
 // criar a funcao criaProcedimento e colocar como permissao em admin, mas nao em adminTeste
 
 $adminTeste = array("criaOrcamento", "calculaPagamento",
-"calculaDespesa", "calculaLucro", "addEspecialidadeDentista", "addProcFeitos", "addHabilitacao", "calcPagamento", "addProcedimento", "addDetalhamento", "DesassociaCliente", "exibeInfo", "associaResponsavel", "marcaConsulta", "finalizaProcedimento", "criaUsuario", "verificaPermissao", "addEspecialidadesDentista", "AssociaCliente");
+"calculaDespesa", "calculaLucro", "addEspecialidadeDentista",
+ "addProcFeitos", "addHabilitacao", "calcPagamento", "addProcedimento",
+  "addDetalhamento", "DesassociaCliente", "exibeInfo", "associaResponsavel",
+   "marcaConsulta", "finalizaProcedimento", "criaUsuario", "verificaPermissao",
+    "addEspecialidadesDentista", "AssociaCliente");
 $perfilAdmin = new Perfil ($admin);
 $usuario1 = new Usuario ("mateus@gmail.com", "Mateus", "mateus544", $perfilAdmin);
 $usuario2 = new Usuario ("joao@gmail.com", "João", "joao146", $perfilAdmin);

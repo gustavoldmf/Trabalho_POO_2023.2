@@ -4,6 +4,7 @@ include_once('global.php');
 // leticia: classe permissoes estava com informações de outras classes
 class Permissoes extends persist {
 
+    public $verificado = null;
     static $local_filename = "permissoes.txt";
   
     public function __construct() {
@@ -20,17 +21,28 @@ para chamar a funcao, faz-se:
 verificaPermissao($loginAtual, __FUNCTION__);
 //__FUNCTION__ vai checar o nome da funcao
 
-*/
+*/  
+    public function verificaLogin() {
+        $this->verificado = Login::getRecordsByField("logado", 1);
+        if($verificado->getLogado() == 1){
+            return true;
+        }
+        else 
+        return false;
+        
+    }
   
-    static public function verificaPermissao($login, string $Permissao) {
+    static public function verificaPermissao(string $Permissao) {
+
         
         $usuario = $login->getUsuario();
-
         $perfil  = $usuario->getPerfil();
-
         $permissoes = $perfil->getPermissoes();
-      
-       
+
+        $logado = $this->verificaLogin();
+
+       if( $logado == true){
+
        for ($i=0; $i<sizeof($permissoes); $i++) {
 
           if ($permissoes[$i] == $Permissao) {
@@ -39,6 +51,7 @@ verificaPermissao($loginAtual, __FUNCTION__);
           }
          
        }
+    }
 
 
       return false;
