@@ -46,7 +46,10 @@ class Tratamento extends persist {
     }
 
     public function associaResponsavel(Dentista $DentistaEx, Procedimentos $Procedimento) {
-       
+       $login1 = Login::getRecordsbyField("logado", 1);
+       $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+
+       if (permissao === true){
       if ($this->verificaEspecialidadeDentista($DentistaEx, $Procedimento)) {
             $responsabilidades = new Responsabilidades($DentistaEx, $Procedimento);
             $this->execucao[] = $responsabilidades; 
@@ -55,23 +58,40 @@ class Tratamento extends persist {
             echo "\nO dentista não possui a especialidade necessária para o procedimento.\n";
             return false;
         }
+       } else {
+        echo "Voce nao tem permissao para realizar esta acao"
+      }
     }
 
     public function marcaConsulta(string $data, string $horario, string $duracao, Responsabilidades $responsabilidades) {
+      $login1 = Login::getRecordsbyField("logado", 1);
+       $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+
+       if (permissao === true){
 
       $procedimentoEscolhido = $responsabilidades->getProcedimento();
       $dentistaExecutor = $responsabilidades->getDentistaEx();
       $c = new Consulta($this->orcamentoAssociado->getPacienteAssociado(), $dentistaExecutor, $data, $horario, $duracao, $procedimentoEscolhido);
       return $c;
+       } else {
+        echo "Voce nao tem permissao para realizar esta acao"
+      }
     }
 
     public function finalizaProcedimento(Responsabilidades $responsabilidades, string $dataConclusao) {
+      $login1 = Login::getRecordsbyField("logado", 1);
+       $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+
+       if (permissao === true){
         
         $concluido = new Concluidos($responsabilidades->getDentistaEx(), $responsabilidades->getProcedimento(), $dataConclusao);
         array_push ($this->concluidos, $concluido);
 
       if($responsabilidades->getDentistaEx() instanceof DentistaParceiro){
         $responsabilidades->DentistaEx->addProcFeitos($concluido);
+        }
+      } else {
+        echo "Voce nao tem permissao para realizar esta acao"
       }
     }
   

@@ -23,17 +23,39 @@ class DentistaParceiro extends Dentista{
     }
 
     public function addProcFeitos(Concluidos $concluidos){
+      $login1 = Login::getRecordsbyField("logado", 1);
+      $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+
+      if (permissao === true){
         array_push($this->procedimentosFeitos, $concluidos);
+      } else {
+        echo "Voce nao tem permissao para realizar esta acao"
+      }
     }
 
     public function addHabilitacao(Habilitacao $habilitacao){
+      $login1 = Login::getRecordsbyField("logado", 1);
+      $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+
+      if (permissao === true){
       array_push($this->habilitacoes, $habilitacao);
+      } else {
+          echo "Voce nao tem permissao para realizar esta acao"
+        }
     }
 
     public function addPagamento(string $mesAno){
+      $login1 = Login::getRecordsbyField("logado", 1);
+      $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+
+      if (permissao === true){
+      
         $pagamentoMes = new PagamentoMes ($mesAno);
         $pagamentoMes->calcPagamento($this);
         array_push($this->pagamentos, $pagamentoMes);
+      } else {
+        echo "Voce nao tem permissao para realizar esta acao"
+      }
     }
 
 

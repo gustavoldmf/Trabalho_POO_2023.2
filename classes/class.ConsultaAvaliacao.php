@@ -50,8 +50,16 @@ class ConsultaAvaliacao extends persist{
     }
   // leticia: finalizei funcao criaOrcamento
     public function criaOrcamento() {
+      $login1 = Login::getRecordsbyField("logado", 1);
+      $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+
+      if (permissao === true){
       $Orcamento = new Orcamento ($this->pacienteAssociado, $this->dentistaAvaliador, $this->data);
       return $Orcamento;
+      }
+      else {
+        echo "Voce nao tem permissao para realizar esta acao"
+      }
     }
 
     static public function getFilename() {

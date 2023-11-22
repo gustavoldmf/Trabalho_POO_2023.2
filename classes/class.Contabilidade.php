@@ -30,6 +30,10 @@ class Contabilidade extends persist {
   }
 
   public function calculaPagamento() {
+      $login1 = Login::getRecordsbyField("logado", 1);
+      $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+  
+    if (permissao === true){
       for ($i = 0; $i < sizeof($this->pagReceita); $i++) {
 
         $this->metodo = $this->pagReceita[$i]->getMetodoPagamento();
@@ -37,10 +41,16 @@ class Contabilidade extends persist {
         $this->receita = $this->receita + $this->pagReceita[$i]->getValorPago() * ($this->taxa);
       }
         return $this->receita;
+    } else {
+      echo "Voce nao tem permissao para realizar esta acao"
+    }
   }
 
   public function calculaDespesa(){
+    $login1 = Login::getRecordsbyField("logado", 1);
+    $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
 
+    if (permissao === true){
     //salário de todos os dentistas parceiros
     for($j = 0; $j < sizeof($this->dentista); $j++){
     for ($i = 0; $i < sizeof($this->pagDespesa); $i++) {
@@ -52,11 +62,20 @@ class Contabilidade extends persist {
    //salário do unico dentista funcionario
     $this->despesa = $this->despesa + 5000;
     return $this->despesa;
+    } else {
+      echo "Voce nao tem permissao para realizar esta acao"
+    }
   }
-
   public function calculaLucro(){
+    $login1 = Login::getRecordsbyField("logado", 1);
+    $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+
+    if (permissao === true){
     $this->lucro = $this->receita - $this->despesa;
     return $this->lucro;
+    } else {
+      echo "Voce nao tem permissao para realizar esta acao"
+    }
   }
 
   public function getLucro(){

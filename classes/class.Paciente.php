@@ -29,12 +29,26 @@ class Paciente extends Pessoa {
 
     public function AssociaCliente (Cliente $ClienteAssociado)
     {
+      $login1 = Login::getRecordsbyField("logado", 1);
+      $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+
+      if (permissao === true){
       $this->ClienteAssociado=$ClienteAssociado;  
+      } else {
+        echo "Voce nao tem permissao para realizar esta acao"
+      }
     }
       
     public function DesassociaCliente (Cliente $ClienteAssociado)
-    {
+    { 
+      $login1 = Login::getRecordsbyField("logado", 1);
+      $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+
+      if (permissao === true){
       $this->ClienteAssociado= null;  
+      } else {
+        echo "Voce nao tem permissao para realizar esta acao"
+      }
     }
 
     public function getClienteAssociado ()
@@ -43,12 +57,19 @@ class Paciente extends Pessoa {
     }
 
     public function exibeInfo(){
+      $login1 = Login::getRecordsbyField("logado", 1);
+      $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+
+      if (permissao === true){
       print("Informações do Paciente:" ."\n\n");
       print("Nome:" .$this->nome ."\n");
       print("RG:" .$this->RG ."\n");
       print("Email:" .$this->email ."\n");
       print("Contato:" .$this->telefone ."\n");
       print("Data de nascimento:" .$this->nascimento ."\n");
+      } else {
+        echo "Voce nao tem permissao para realizar esta acao"
+      }
     }
 
     static public function getFilename() {
