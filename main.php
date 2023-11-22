@@ -170,33 +170,38 @@ $receita = $contabilidade->calculaPagamento();
 // echo "Lucro: $lucro \n";
 // $lucroMes = $contabilidade->getLucro();
 
-
-Login::Logar("teste@hotmail.com","matheus123");
-$login1 = Login::getRecordsbyField("logado", 1);
-$login1 = $login1[0];
-$login1->LogOut();
-
-Login::Logar("teste@gmail.com","matheus123");
-$testando = Login::getRecordsbyField("logado", 0);
-// vai printar o login antigo, que ja deslogou, to testando se ele verifica qual o deslogado
-//print_r ($testando);
-
-$testando1 = Login::getRecords();
-// vai printar todos os logins ja feitos, mas detalhe para o atributo "logado", mostrando que apenas 1 está logado e o outro não. 
-//print_r ($testando1);
-
-
-// print_r(Login::getRecords());
-// echo "$login1->getInstance()";
-
-
-if(!(Permissoes::verificaPermissao($login1, "aquilooutro")))
-  echo "deu!";
-
 ////////////////////////////////////////////////////////////////////////////////////////
 
 
 // -------------------------------------- Roteiro de Testes --------------------------------------
+
+// Teste Funcionalidade sem Login
+// $pacienteTeste = new Paciente("Samuel", "23.494.298-8", "samuel@gmail.com", "(31) 99855-7846", "25-06-1998");
+// echo $pacienteTeste;
+
+// Cadastro do Usuário, mas sem a permissão de Cadastrar Procedimento
+Login::Logar("mateus@gmail.com","mateus544");
+$login1 = Login::getRecordsbyField("logado", 1);
+// $procedimentoTeste = new Especialidade ("Procedimento Teste");
+$login1 = $login1[0];
+$login1->LogOut();
+
+// Cadastro do Usuário com Acesso Total
+Login::Logar("joao@gmail.com","joao146");
+$login2 = Login::getRecordsbyField("logado", 0);
+
+// vai printar o login antigo, que ja deslogou, to testando se ele verifica qual o deslogado
+// print_r ($login2);
+// $login3 = Login::getRecords();
+// vai printar todos os logins ja feitos, mas detalhe para o atributo "logado", mostrando que apenas 1 está logado e o outro não. 
+// print_r ($login3);
+
+// print_r(Login::getRecords());
+// echo "$login1->getInstance()";
+
+if(!(Permissoes::verificaPermissao($login1, "aquilooutro")))
+  echo "deu!";
+
 
 // Criando Especialidades
 $clinicaGeral = new Especialidade ("Clínica Geral");
@@ -223,17 +228,6 @@ $clareamentoMoldeira = new Procedimentos("Clareamento de moldeira", "Clareamento
 // echo $extracaoSiso;
 // echo $clareamentoLaser;
 // echo $clareamentoMoldeira;
-
-// Teste Métodos de Pagamento
-$aVista = new MetodoPagamento("Dinheiro à Vista", 0);
-$pix = new MetodoPagamento("PIX", 0);
-$debito = new MetodoPagamento("Débito", 0.03);
-$credito1 = new MetodoPagamento("1x no Crédito", 0.04);
-$credito2 = new MetodoPagamento("2x no Crédito", 0.04);
-$credito3 = new MetodoPagamento("3x no Crédito", 0.04);
-$credito4 = new MetodoPagamento("4x no Crédito", 0.07);
-$credito5 = new MetodoPagamento("5x no Crédito", 0.07);
-$credito6 = new MetodoPagamento("6x no Crédito", 0.07);
 
 // echo $aVista;
 // echo $pix;
