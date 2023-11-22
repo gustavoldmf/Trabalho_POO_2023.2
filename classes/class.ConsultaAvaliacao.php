@@ -52,9 +52,9 @@ class ConsultaAvaliacao extends persist{
     public function criaOrcamento() {
       $login1 = Login::getRecordsbyField("logado", 1);
       $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
-
       if ($permissao === true){
       $Orcamento = new Orcamento ($this->pacienteAssociado, $this->dentistaAvaliador, $this->data);
+        
       return $Orcamento;
       }
       else {

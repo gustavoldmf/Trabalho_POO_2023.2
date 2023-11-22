@@ -32,8 +32,8 @@ echo $paciente2;*/
 // Associando pacientes a clientes
 $cliente1 = new Cliente('Cliente 1', 'RG1', 'cliente1@example.com', '987654321', 'CPF1');
 $cliente2 = new Cliente('Cliente 2', 'RG2', 'cliente2@example.com', '123456789', 'CPF2');
-$paciente1->AssociaCliente($cliente1);
-$paciente2->AssociaCliente($cliente2);
+// $paciente1->AssociaCliente($cliente1);
+// $paciente2->AssociaCliente($cliente2);
 
 //echo $cliente1;
 //echo $cliente2;
@@ -45,9 +45,9 @@ $dentista2 = new DentistaFuncionario('Dentista 2', 'Dentista RG2', 'dentista2@ex
 // $dentista3 = new DentistaParceiro('Dentista 3', 'Dentista RG3', 'dentista3@example.com', '33333333333', 'CRO3', 'Endereço 3');
 
 // Adicionando especialidades aos dentistas
-$dentista1->addEspecialidadesDentista($odontopediatria);
-$dentista2->addEspecialidadesDentista($ortodontia);
-$dentista2->addEspecialidadesDentista($cirurgia);
+// $dentista1->addEspecialidadesDentista($odontopediatria);
+// $dentista2->addEspecialidadesDentista($ortodontia);
+// $dentista2->addEspecialidadesDentista($cirurgia);
 // $dentista3->addEspecialidadesDentista($clinicaMedica);
 
 /*echo $dentista1;
@@ -147,22 +147,22 @@ $habilitacao = new Habilitacao($odontopediatria, 0.4);
 $concluidos = new Concluidos($dentista1, $procedimento1, "13-11-2023");
 
 
-$dentista1->addProcFeitos($concluidos);
-$dentista1->addHabilitacao($habilitacao);
-$dentista1->save();
+// $dentista1->addProcFeitos($concluidos);
+// $dentista1->addHabilitacao($habilitacao);
+// $dentista1->save();
 //$dentista1->CalcPagamento($dentista1->getProcFeitos(), $dentista1->getHabilitacao());
 
-$pagamentoOutubro = new PagamentoMes("10-2023");
-$pagamentoOutubro->save();
-$pagamentoNovembro = new PagamentoMes("11-2023");
-$pagamentoNovembro->save();
+// $pagamentoOutubro = new PagamentoMes("10-2023");
+// $pagamentoOutubro->save();
+// $pagamentoNovembro = new PagamentoMes("11-2023");
+// $pagamentoNovembro->save();
 
-$mesAno = "11-2023";
-$testando = Pagamento::getRecordsbyField ("mesAno", $mesAno);
-// print_r($testando);
+// $mesAno = "11-2023";
+// $testando = Pagamento::getRecordsbyField ("mesAno", $mesAno);
+// // print_r($testando);
 
 $contabilidade = new Contabilidade("11-2023");
-$receita = $contabilidade->calculaPagamento();
+// $receita = $contabilidade->calculaPagamento();
 // echo "Receita: $receita \n";
 // $despesas = $contabilidade->calculaDespesa();
 // echo "Despesas: $despesas \n";
@@ -198,10 +198,6 @@ $login2 = Login::getRecordsbyField("logado", 0);
 
 // print_r(Login::getRecords());
 // echo "$login1->getInstance()";
-
-if(!(Permissoes::verificaPermissao($login1, "aquilooutro")))
-  echo "deu!";
-
 
 // Criando Especialidades
 $clinicaGeral = new Especialidade ("Clínica Geral");

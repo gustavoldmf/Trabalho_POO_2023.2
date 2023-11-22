@@ -34,10 +34,17 @@ class Tratamento extends persist {
   
     public function verificaEspecialidadeDentista(Dentista $dentista, Procedimentos $procedimento) {
         $arrayEspecialidadeDentista = $dentista->getEspecialidadesDentista();
+ 
         $especialidadeProcedimento = $procedimento->getEspecialidade();
 
+
+      
         foreach($arrayEspecialidadeDentista as $especialidade){
+
+          
           if ($especialidade->getNomeEspecialidade() === $especialidadeProcedimento->getNomeEspecialidade())         {
+
+            
             return true;
           }
         }
@@ -47,12 +54,16 @@ class Tratamento extends persist {
 
     public function associaResponsavel(Dentista $DentistaEx, Procedimentos $Procedimento) {
        $login1 = Login::getRecordsbyField("logado", 1);
+
        $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
 
        if ($permissao === true){
+
       if ($this->verificaEspecialidadeDentista($DentistaEx, $Procedimento)) {
+
             $responsabilidades = new Responsabilidades($DentistaEx, $Procedimento);
-            $this->execucao[] = $responsabilidades; 
+            array_push($this->execucao,$responsabilidades);
+
             return $responsabilidades;
         } else {
             echo "\nO dentista não possui a especialidade necessária para o procedimento.\n";
@@ -67,7 +78,7 @@ class Tratamento extends persist {
       $login1 = Login::getRecordsbyField("logado", 1);
        $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
 
-       if (permissao === true){
+       if ($permissao === true){
 
       $procedimentoEscolhido = $responsabilidades->getProcedimento();
       $dentistaExecutor = $responsabilidades->getDentistaEx();

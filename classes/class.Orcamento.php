@@ -82,7 +82,7 @@ class Orcamento extends persist{
       if ($permissao === true){
         array_push ($this->procedimentosAssociados, $procedimento);
       } else {
-        echo "Voce nao tem permissao para realizar esta acao";
+        echo "testeeeeeeeeeeeeeeeeeeeeEEEEEEEE";
       }
     }
 

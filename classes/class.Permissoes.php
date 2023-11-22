@@ -22,19 +22,25 @@ verificaPermissao($loginAtual, __FUNCTION__);
 
 */
   
-    static public function verificaPermissao(Login $login, string $Permissao) {
+    static public function verificaPermissao($login, string $Permissao) {
         
         $usuario = $login->getUsuario();
+
         $perfil  = $usuario->getPerfil();
+
         $permissoes = $perfil->getPermissoes();
+      
        
        for ($i=0; $i<sizeof($permissoes); $i++) {
 
           if ($permissoes[$i] == $Permissao) {
+
             return true;
           }
          
        }
+
+
       return false;
     }
 

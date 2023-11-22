@@ -3,14 +3,20 @@
 include_once('global.php');
 
 // Criando Usuários
-$teste = array("isso", "aquilo");
-$perfil = new Perfil ($teste);
-$usuario1 = new Usuario ("mateus@hotmail.com", "Mateus", "mateus544", $perfil);
-$usuario2 = new Usuario ("joao@gmail.com", "João", "joao146", $perfil);
+$admin = array("criaOrcamento", "calculaPagamento",
+"calculaDespesa", "calculaLucro", "addEspecialidadeDentista", "addProcFeitos", "addHabilitacao", "calcPagamento", "addProcedimento", "addDetalhamento", "associaResponsavel", "DesassociaCliente", "exibeInfo", "associaResponsavel", "marcaConsulta", "finalizaProcedimento", "criaUsuario", "verificaPermissao", "addEspecialidadesDentista", "AssociaCliente");
+// criar a funcao criaProcedimento e colocar como permissao em admin, mas nao em adminTeste
+
+$adminTeste = array("criaOrcamento", "calculaPagamento",
+"calculaDespesa", "calculaLucro", "addEspecialidadeDentista", "addProcFeitos", "addHabilitacao", "calcPagamento", "addProcedimento", "addDetalhamento", "DesassociaCliente", "exibeInfo", "associaResponsavel", "marcaConsulta", "finalizaProcedimento", "criaUsuario", "verificaPermissao", "addEspecialidadesDentista", "AssociaCliente");
+$perfilAdmin = new Perfil ($admin);
+$usuario1 = new Usuario ("mateus@gmail.com", "Mateus", "mateus544", $perfilAdmin);
+$usuario2 = new Usuario ("joao@gmail.com", "João", "joao146", $perfilAdmin);
 $usuario1->save();
 $usuario2->save();
 
 // Criando os Métodos de Pagamento Disponíveis
+$metodoPagamento = new MetodoPagamento("PIX", 0);
 $aVista = new MetodoPagamento("Dinheiro à Vista", 0);
 $pix = new MetodoPagamento("PIX", 0);
 $debito = new MetodoPagamento("Débito", 0.03);

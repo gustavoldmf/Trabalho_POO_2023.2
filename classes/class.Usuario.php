@@ -7,7 +7,7 @@ class Usuario extends persist {
     protected $nome;
     private $senha;
     protected $Perfil;
-    static $local_filename = "perfil.txt";
+    static $local_filename = "usuario.txt";
   
     public function __construct(string $email, string $nome, string $senha, Perfil $Perfil) {
         $this->email = $email;
@@ -24,13 +24,13 @@ class Usuario extends persist {
     }
 
     public function verificaLogin() {
-    
       $verifica = Login::getRecordsByField("logado", 1);
-        if($verifica->getLogado() == 1){
-            return true;
-        }
-        else 
-            return false;
+      if($verifica->getLogado() == 1){
+          return true;
+      }
+      else 
+      return false;
+      
     }
 
     public function getEmail() {

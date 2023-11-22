@@ -42,9 +42,9 @@ class Paciente extends Pessoa {
     public function DesassociaCliente (Cliente $ClienteAssociado)
     { 
       $login1 = Login::getRecordsbyField("logado", 1);
-      $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
+      $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
 
-      if ($permissao === true){
+      if (permissao === true){
       $this->ClienteAssociado= null;  
       } else {
         echo "Voce nao tem permissao para realizar esta acao";
@@ -58,9 +58,9 @@ class Paciente extends Pessoa {
 
     public function exibeInfo(){
       $login1 = Login::getRecordsbyField("logado", 1);
-      $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
+      $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
 
-      if ($permissao === true){
+      if (permissao === true){
       print("Informações do Paciente:" ."\n\n");
       print("Nome:" .$this->nome ."\n");
       print("RG:" .$this->RG ."\n");
