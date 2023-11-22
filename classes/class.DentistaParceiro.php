@@ -24,9 +24,9 @@ class DentistaParceiro extends Dentista{
 
     public function addProcFeitos(Concluidos $concluidos){
       $login1 = Login::getRecordsbyField("logado", 1);
-      $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+      $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
 
-      if (permissao === true){
+      if ($permissao === true){
         array_push($this->procedimentosFeitos, $concluidos);
       } else {
         echo "Voce nao tem permissao para realizar esta acao";
@@ -46,9 +46,9 @@ class DentistaParceiro extends Dentista{
 
     public function addPagamento(string $mesAno){
       $login1 = Login::getRecordsbyField("logado", 1);
-      $permissao = Permissoes::verificaPermissao($login1, __FUNCTION__);
+      $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
 
-      if (permissao === true){
+      if ($permissao === true){
       
         $pagamentoMes = new PagamentoMes ($mesAno);
         $pagamentoMes->calcPagamento($this);
