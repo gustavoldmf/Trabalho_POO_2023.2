@@ -2,17 +2,16 @@
 
 include_once('global.php');
 
-// Criando Usuários
-$admin = array("criaProcedimento", "criaOrcamento", "calculaPagamento", "calculaDespesa", "calculaLucro", "addEspecialidadeDentista",
-"addProcFeitos", "addHabilitacao", "calcPagamento", "addProcedimento","addDetalhamento", "associaResponsavel", "DesassociaCliente", "exibeInfo",
-"associaResponsavel", "marcaConsulta", "finalizaProcedimento", "criaUsuario","verificaPermissao", "addEspecialidadesDentista","AssociaCliente", "cadastraPaciente", "criaEspecialidade","cadastraDentistaFuncionario", "cadastraDentistaParceiro", "cadastraDentista", "criaHabilitacao", "cadastraCliente", "criaConsultaAvaliacao", "iniciaContabilidade", "pagar");
-// criar a funcao criaProcedimento e colocar como permissao em admin, mas nao em adminTeste
+// Criando usuário admin com um array que contém todos as funcionalidades
+$admin = array("criaProcedimento", "criaOrcamento", "calculaPagamento", "calculaDespesa", "calculaLucro", "addEspecialidadeDentista", "addProcFeitos", "addHabilitacao", "calcPagamento", "addProcedimento","addDetalhamento", "associaResponsavel", "DesassociaCliente", "exibeInfo", "associaResponsavel", "marcaConsulta", "finalizaProcedimento", "criaUsuario","verificaPermissao", "addEspecialidadesDentista","AssociaCliente", "cadastraPaciente", "criaEspecialidade","cadastraDentistaFuncionario", "cadastraDentistaParceiro", "cadastraDentista", "criaHabilitacao", "cadastraCliente", "criaConsultaAvaliacao", "iniciaContabilidade", "pagar");
 
+// Criando usuário adminTeste com um array que contém todos as funcionalidades, exceto a criaProcedimento, para realizar o teste segundo o roteiro
 $adminTeste = array("criaOrcamento", "calculaPagamento", "calculaDespesa", "calculaLucro", "addEspecialidadeDentista","addProcFeitos", "addHabilitacao", "calcPagamento", "addProcedimento", "addDetalhamento", "associaResponsavel", "DesassociaCliente", "exibeInfo", "associaResponsavel", "marcaConsulta", "finalizaProcedimento", "criaUsuario","verificaPermissao", "addEspecialidadesDentista","AssociaCliente", "cadastraPaciente", "criaEspecialidade","cadastraDentistaFuncionario", "cadastraDentistaParceiro", "cadastraDentista", "criaHabilitacao", "cadastraCliente", "criaConsultaAvaliacao", "iniciaContabilidade", "pagar");
 
 $perfilAdmin = new Perfil ($admin);
 $perfilAdminTeste = new Perfil ($adminTeste);
 
+// O primeiro usuário será o que não tem permissão para criar procedimentos e o segundo,
 $usuario1 = new Usuario ("mateus@gmail.com", "Mateus", "mateus544", $perfilAdminTeste);
 $usuario2 = new Usuario ("joao@gmail.com", "João", "joao146", $perfilAdmin);
 $usuario1->save();
