@@ -21,6 +21,9 @@ class Contabilidade extends persist {
       $this->mesAno = $mesAno;
       $this->pagReceita = Pagamento::getRecordsbyField ("mesAno", $mesAno);
       $this->dentista = DentistaParceiro::getRecords();
+
+      
+
       $this->pagDespesa = PagamentoMes::getRecordsByField("mesAno", $mesAno);
       
       // $this->receita = Contabilidade::calculaPagamento();

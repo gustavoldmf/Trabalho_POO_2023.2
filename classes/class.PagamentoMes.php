@@ -21,7 +21,7 @@ class PagamentoMes extends persist {
 
   public function getValorPagamento() {
       return $this->valorPagamento;
-  }
+  } 
 
   public function setValorPagamento(float $valorPagamento) {
       $this->valorPagamento = $valorPagamento;
@@ -29,12 +29,12 @@ class PagamentoMes extends persist {
 
   public function calcPagamento(DentistaParceiro $dentista) {
     $valorPagamento = 0;
+
     $procFeitos = $dentista->getProcFeitos();
+    
     $habilitacoes = $dentista->getHabilitacao();
     
   foreach ($procFeitos as $concluidos) {
-    echo "1 $this->mesAno";
-    echo "2 ".$concluidos->getMesAno();
     if ($this->mesAno === $concluidos->getMesAno()){
     $proc = $concluidos->getProcedimento();
       

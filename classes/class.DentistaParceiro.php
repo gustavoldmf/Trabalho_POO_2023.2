@@ -7,7 +7,7 @@ class DentistaParceiro extends Dentista{
     protected $habilitacoes = array();
     protected $pagamentos = array();
     static $local_filename = "dentistaParceiro.txt";
-  
+    
 
     public function __construct(string $nome, string $RG, string $email, string $telefone, string $CRO, string $endereco){
         $this->nome=$nome;
@@ -53,7 +53,6 @@ class DentistaParceiro extends Dentista{
 
 
   public function getProcFeitos(){
-    print_r($this->procedimentosFeitos);
     return $this->procedimentosFeitos;
   }
 
