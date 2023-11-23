@@ -81,7 +81,7 @@ class Orcamento extends persist{
       if ($permissao === true){
         array_push ($this->procedimentosAssociados, $procedimento);
       } else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
 
@@ -92,7 +92,7 @@ class Orcamento extends persist{
         if ($permissao === true){
         array_push ($this->detalhamentosAssociados, $detalhamento);
         }else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".
 ";
       }
     }

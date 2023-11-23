@@ -26,7 +26,7 @@ class DentistaParceiro extends Dentista{
         $dentista = new DentistaParceiro ($nome, $RG, $email, $telefone, $CRO,$endereco);
         return $dentista;
       } else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
 
@@ -36,7 +36,7 @@ class DentistaParceiro extends Dentista{
       if ($permissao === true){
         array_push($this->procedimentosFeitos, $concluidos);
       } else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
 
@@ -46,7 +46,7 @@ class DentistaParceiro extends Dentista{
       if ($permissao === true){
       array_push($this->habilitacoes, $habilitacao);
       } else {
-          echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+          echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
         }
     }
 
@@ -59,7 +59,7 @@ class DentistaParceiro extends Dentista{
         $pagamentoMes->calcPagamento($this);
         array_push($this->pagamentos, $pagamentoMes);
       } else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
 

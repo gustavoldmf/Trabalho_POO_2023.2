@@ -28,7 +28,7 @@ class DentistaFuncionario extends Dentista {
         $dentista = new DentistaFuncionario ($nome, $RG, $email, $telefone, $CRO, $endereco, $salario);
         return $dentista;
       } else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
   

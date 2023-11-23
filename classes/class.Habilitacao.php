@@ -22,7 +22,7 @@ class Habilitacao extends persist {
         $habilitacao = new Habilitacao ( $especialidade, $comissao);
         return $habilitacao;
       } else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
 

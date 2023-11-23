@@ -6,19 +6,19 @@ class Usuario extends persist {
     protected $email;
     protected $nome;
     private $senha;
-    protected $Perfil;
+    protected $perfil;
     static $local_filename = "usuario.txt";
   
-    public function __construct(string $email, string $nome, string $senha, Perfil $Perfil) {
+    public function __construct(string $email, string $nome, string $senha, Perfil $perfil) {
         $this->email = $email;
         $this->nome = $nome;
         $this->senha = $senha;
-        $this->Perfil = $Perfil;
+        $this->perfil = $perfil;
     }
 
-    static public function criaUsuario(string $email, string $nome, string $senha, Perfil $Perfil) {
-        if ($Perfil->getPermissoes()["funcionario"] == true || $Perfil->getPermissoes()["dentista parceiro"] == true) {
-            $usuario = new Usuario($email, $nome, $senha, $Perfil);
+    static public function criaUsuario(string $email, string $nome, string $senha, Perfil $perfil) {
+        if ($perfil->getPermissoes()["funcionario"] == true || $perfil->getPermissoes()["dentista parceiro"] == true) {
+            $usuario = new Usuario($email, $nome, $senha, $perfil);
             return $usuario;
         }
     }
@@ -32,7 +32,7 @@ class Usuario extends persist {
     }
 
     public function getPerfil() {
-        return $this->Perfil;
+        return $this->perfil;
     }
   
     static public function getFilename() {

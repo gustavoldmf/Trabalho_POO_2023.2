@@ -7,9 +7,10 @@ class Contabilidade extends persist {
   protected $receita;
   protected $despesa;
   protected $dentista = array();
+  protected $dentistaF = array();
   protected $pagReceita = array();
   protected $pagDespesa = array ();
-  protected $funcionarios;
+  protected $funcionarios;  
   protected $metodo;
   protected $taxa;
   protected $mesAno;   
@@ -21,15 +22,8 @@ class Contabilidade extends persist {
       $this->mesAno = $mesAno;
       $this->pagReceita = Pagamento::getRecordsbyField ("mesAno", $mesAno);
       $this->dentista = DentistaParceiro::getRecords();
-
-      
-
+      $this->dentistaF = DentistaFuncionario::getRecords();
       $this->pagDespesa = PagamentoMes::getRecordsByField("mesAno", $mesAno);
-      
-      // $this->receita = Contabilidade::calculaPagamento();
-      // $this->despesa = Contabilidade::calculaDespesa();
-      // $this->lucro = Contabilidade::calculaLucro();
-    
   }
 
   static public function iniciaContabilidade (string $mesAno) {
@@ -40,7 +34,7 @@ class Contabilidade extends persist {
       $contabilidade = new Contabilidade ($mesAno);
       return $contabilidade;
     } else {
-      echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+      echo "Você não tem permissão para realizar a função " .__FUNCTION__.  ".\n";
     }
   }
 
@@ -56,7 +50,7 @@ class Contabilidade extends persist {
       }
         return $this->receita;
     } else {
-      echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+      echo "Você não tem permissão para realizar a função " .__FUNCTION__.  ".\n";
     }
   }
 
@@ -64,7 +58,7 @@ class Contabilidade extends persist {
     $permissao = Permissoes::verificaPermissao(__FUNCTION__);
 
     if ($permissao === true){
-    //salário de todos os dentistas parceiros
+    // Pagamento dos dentistas parceiros
     for($j = 0; $j < sizeof($this->dentista); $j++){
       for ($i = 0; $i < sizeof($this->pagDespesa); $i++) {
         $this->pagDespesa[$i]->calcPagamento($this->dentista[$j]);
@@ -72,11 +66,13 @@ class Contabilidade extends persist {
 
       }
     }
-   //salário do unico dentista funcionario
-    $this->despesa = $this->despesa + 5000;
-    return $this->despesa;
+    // Despesas somadas aos valores dos salários dos dentistas funcionários
+      for($j = 0; $j < sizeof($this->dentistaF); $j++){
+        $this->despesa = $this->despesa + $this->dentistaF[$j]->getSalario();
+      }
+      return $this->despesa;
     } else {
-      echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__.  ".\n";
     }
   }
   public function calculaLucro(){
@@ -86,7 +82,7 @@ class Contabilidade extends persist {
     $this->lucro = $this->receita - $this->despesa;
     return $this->lucro;
     } else {
-      echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+      echo "Você não tem permissão para realizar a função " .__FUNCTION__.  ".\n";
     }
   }
 

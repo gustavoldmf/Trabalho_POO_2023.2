@@ -20,7 +20,7 @@ class Especialidade extends persist {
         return $especialidade;
 
       } else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
 

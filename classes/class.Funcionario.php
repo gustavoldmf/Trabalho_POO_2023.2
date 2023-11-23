@@ -5,7 +5,6 @@ class Funcionario extends Pessoa {
 
     protected $endereco;
     protected $salario;
-    // leticia : adicionei atributo usuario
     protected $usuario;
     static $local_filename = "funcionario.txt";
   

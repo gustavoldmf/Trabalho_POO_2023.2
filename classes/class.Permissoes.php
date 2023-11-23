@@ -1,7 +1,7 @@
 <?php 
 
 include_once('global.php');
-// leticia: classe permissoes estava com informações de outras classes
+
 class Permissoes extends persist {
 
     static protected $verificado = null;
@@ -10,18 +10,6 @@ class Permissoes extends persist {
     public function __construct() {
     }
 
-
-/*
-
-
-como acessar o verifica permissao? Basta atribuir um login (atual) a uma variavel via GRBF
-$loginAtual = getRecordsByField ("logado", 1);
-// agora o loginAtual já tem o unico objeto usuario logado
-para chamar a funcao, faz-se:
-verificaPermissao($loginAtual, __FUNCTION__);
-//__FUNCTION__ vai checar o nome da funcao
-
-*/  
     static public function verificaLogin() {
         self::$verificado = Login::getRecordsByField("logado", 1);
         if(self::$verificado != NULL){

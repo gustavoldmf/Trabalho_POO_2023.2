@@ -5,8 +5,7 @@ include_once('global.php');
 class Dentista extends Pessoa {
   protected $CRO;
   protected $endereco;
-  protected $especialidadesDentista = []; // Atualização aqui
-  //leticia : adicionei o atributo usuario
+  protected $especialidadesDentista = [];
   protected $usuario;
   static $local_filename = "dentista.txt";
   
@@ -29,7 +28,7 @@ class Dentista extends Pessoa {
       $dentista = new Dentista ($nome, $RG, $email, $telefone, $CRO, $endereco);
       return $dentista;
     } else {
-      echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+      echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
     }
   }
   
@@ -50,11 +49,9 @@ class Dentista extends Pessoa {
       $this->endereco = $endereco;
   }
 
-  public function getEspecialidadesDentista() { // Atualização aqui
-      return $this->especialidadesDentista;
+  public function getEspecialidadesDentista() {
+    return $this->especialidadesDentista;
   }
-  
-  //leticia: mudei metodo para addEspecialidade em vez de set especialidade. Agora, adicionamos uma especialidade por vez.
   
   public function addEspecialidadesDentista(Especialidade $especialidade) { 
     $permissao = Permissoes::verificaPermissao(__FUNCTION__);
@@ -62,7 +59,7 @@ class Dentista extends Pessoa {
     if ($permissao === true){
      array_push($this->especialidadesDentista, $especialidade);
     } else {
-      echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+      echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
     }
   }
 

@@ -26,7 +26,7 @@ class Paciente extends Pessoa {
         return $paciente;
         
       } else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
   
@@ -47,7 +47,7 @@ class Paciente extends Pessoa {
       if ($permissao === true){
       $this->ClienteAssociado=$ClienteAssociado;  
       } else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
       
@@ -58,7 +58,7 @@ class Paciente extends Pessoa {
       if ($permissao === true){
       $this->ClienteAssociado= null;  
       } else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
 
@@ -78,7 +78,7 @@ class Paciente extends Pessoa {
       print("Contato:" .$this->telefone ."\n");
       print("Data de nascimento:" .$this->nascimento ."\n");
       } else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
 

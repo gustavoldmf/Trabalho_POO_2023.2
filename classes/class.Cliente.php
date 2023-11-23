@@ -24,7 +24,7 @@ class Cliente extends Pessoa {
         $cliente = new Cliente ($nome, $RG, $email, $telefone, $cpf);
         return $cliente;
       } else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
 

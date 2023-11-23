@@ -2,7 +2,6 @@
 
 include_once('global.php');
 
-//leticia: adicionei gets e sets
 class ConsultaAvaliacao extends persist{
     protected $pacienteAssociado;
     protected $dentistaAvaliador;
@@ -25,7 +24,7 @@ class ConsultaAvaliacao extends persist{
         $consulta = new ConsultaAvaliacao ($pacienteAssociado, $dentistaAvaliador, $data, $horario);
         return $consulta;
       } else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
   
@@ -60,7 +59,7 @@ class ConsultaAvaliacao extends persist{
     public function setHorario(string $horario){
       $this->horario = $horario;
     }
-  // leticia: finalizei funcao criaOrcamento
+
     public function criaOrcamento() {
       $permissao = Permissoes::verificaPermissao(__FUNCTION__);
       if ($permissao === true){
@@ -69,7 +68,7 @@ class ConsultaAvaliacao extends persist{
       return $Orcamento;
       }
       else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
 

@@ -30,22 +30,16 @@ class Tratamento extends persist {
     public function setTipoPagamento(string $tipoPagamento) {
         $this->tipoPagamento = $tipoPagamento;
     }
-
-  // leticia: temos que verificar um array inteiro de especialidades do dentista com uma unica especialidade de procedimento. portanto, tem que ser um for que passa pelo array
   
     public function verificaEspecialidadeDentista(Dentista $dentista, Procedimentos $procedimento) {
         $arrayEspecialidadeDentista = $dentista->getEspecialidadesDentista();
  
         $especialidadeProcedimento = $procedimento->getEspecialidade();
 
-
-      
         foreach($arrayEspecialidadeDentista as $especialidade){
 
-          
-          if ($especialidade->getNomeEspecialidade() === $especialidadeProcedimento->getNomeEspecialidade())         {
-
-            
+          if ($especialidade->getNomeEspecialidade() === $especialidadeProcedimento->getNomeEspecialidade())         
+          {
             return true;
           }
         }
@@ -69,7 +63,7 @@ class Tratamento extends persist {
             return false;
         }
        } else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
 
@@ -83,7 +77,7 @@ class Tratamento extends persist {
       $c = new Consulta($this->orcamentoAssociado->getPacienteAssociado(), $dentistaExecutor, $data, $horario, $duracao, $procedimentoEscolhido);
       return $c;
        } else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
 
@@ -101,7 +95,7 @@ class Tratamento extends persist {
         }
         return $concluidos;
       } else {
-        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+        echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
       }
     }
 
@@ -117,7 +111,7 @@ class Tratamento extends persist {
       return $pagamento;
       
     } else {
-      echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+      echo "Você não tem permissão para realizar a função " .__FUNCTION__. ".\n";
     }
   }
   
