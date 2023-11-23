@@ -3,25 +3,20 @@
 include_once('global.php');
 include_once ('setup.php');
 
-
-// $dataConclusao = "15-11-2023";
-// $tratamento->finalizaProcedimento($responsavel1, $dataConclusao);
-
-//echo $tratamento;
-
-
 // -------------------------------------- Roteiro de Testes --------------------------------------
 
 // Teste Funcionalidade sem Login / Mudar pra criaPaciente
-// $pacienteTeste = new Paciente("Samuel", "23.494.298-8", "samuel@gmail.com", "(31) 99855-7846", "25-06-1998");
+// $pacienteTeste =  Paciente::cadastraPaciente("Samuel", "23.494.298-8", "samuel@gmail.com", "(31) 99855-7846", "25-06-1998");
 // echo $pacienteTeste;
 
 // Cadastro do Usuário, mas sem a permissão de Cadastrar Procedimento / mudar pra cadastroEspecialidade cadastroProcedimento
 Login::Logar("mateus@gmail.com","mateus544");
 $login1 = Login::getRecordsbyField("logado", 1);
 
-$especialidadeTeste = new Especialidade ("Ortodontia");
-$procedimentoTeste = new Procedimentos("Limpeza", "", 200.0, $especialidadeTeste);
+print_r ($login1);
+
+$especialidadeTeste = Especialidade::criaEspecialidade ("Ortodontia");
+//$procedimentoTeste = Procedimentos::criaProcedimento("Limpeza", "", 200.0, $especialidadeTeste);
 
 $login1 = $login1[0];
 $login1->LogOut();
@@ -30,23 +25,25 @@ $login1->LogOut();
 Login::Logar("joao@gmail.com","joao146");
 $login2 = Login::getRecordsbyField("logado", 0);
 
+
 // Criando Especialidades / mudar pra cadastroEspecialidade
-$clinicaGeral = new Especialidade ("Clínica Geral");
-$endodontia = new Especialidade("Endodontia");
-$cirurgia = new Especialidade ("Cirurgia");
-$estetica = new Especialidade("Estética");
+$clinicaGeral = Especialidade::criaEspecialidade ("Clínica Geral");
+$endodontia = Especialidade::criaEspecialidade ("Endodontia");
+$cirurgia = Especialidade::criaEspecialidade  ("Cirurgia");
+$estetica = Especialidade::criaEspecialidade ("Estética");
+
 
 // Criando Procedimentos / mudar pra cadastroProcedimento
-$limpeza = new Procedimentos("Limpeza", "", 200.0, $clinicaGeral);
-$restauracao = new Procedimentos("Restauração", "", 185.0, $clinicaGeral);
-$extracaoComum = new Procedimentos("Extração Comum", "Não inclui dente siso.", 280.0, $clinicaGeral);
+$limpeza = Procedimentos::criaProcedimento("Limpeza", "", 200.0, $clinicaGeral);
+$restauracao = Procedimentos::criaProcedimento("Restauração", "", 185.0, $clinicaGeral);
+$extracaoComum = Procedimentos::criaProcedimento("Extração Comum", "Não inclui dente siso.", 280.0, $clinicaGeral);
 
-$canal = new Procedimentos("Canal", "", 800.0, $endodontia);
+$canal = Procedimentos::criaProcedimento("Canal", "", 800.0, $endodontia);
 
-$extracaoSiso = new Procedimentos("Extração de Siso", "Valor por dente.", 400.0, $cirurgia);
+$extracaoSiso = Procedimentos::criaProcedimento("Extração de Siso", "Valor por dente.", 400.0, $cirurgia);
 
-$clareamentoLaser = new Procedimentos("Clareamento a Laser", "", 1700.0, $estetica);
-$clareamentoMoldeira = new Procedimentos("Clareamento de moldeira", "Clareamento caseiro.", 900.0, $estetica);
+$clareamentoLaser = Procedimentos::criaProcedimento("Clareamento a Laser", "", 1700.0, $estetica);
+$clareamentoMoldeira = Procedimentos::criaProcedimento("Clareamento de moldeira", "Clareamento caseiro.", 900.0, $estetica);
 
 // echo $limpeza;
 // echo $restauracao;
@@ -57,8 +54,8 @@ $clareamentoMoldeira = new Procedimentos("Clareamento de moldeira", "Clareamento
 // echo $clareamentoMoldeira;
 
 // Criando Dentistas / save???
-$dentistaF = new DentistaFuncionario("Lucas", "36.176.562-9", "lucas@clinico.com", "(31) 99935-2324", "MG-95687", "Rua dos Angelins, nº 560", 5000.00);
-$dentistaP = new DentistaParceiro("Marcos", "29.933.390-5", "marcos@clinico.com", "(31) 99104-6045", "MG-20541", "Praça Doutor Jésus Benigno, nº 412");
+$dentistaF = DentistaFuncionario::cadastraDentistaFuncionario("Lucas", "36.176.562-9", "lucas@clinico.com", "(31) 99935-2324", "MG-95687", "Rua dos Angelins, nº 560", 5000.00);
+$dentistaP = DentistaParceiro::cadastraDentistaParceiro("Marcos", "29.933.390-5", "marcos@clinico.com", "(31) 99104-6045", "MG-20541", "Praça Doutor Jésus Benigno, nº 412");
 
 // Adicionando Especialidades aos Dentistas / save???
 $dentistaF->addEspecialidadesDentista($clinicaGeral);
@@ -68,8 +65,8 @@ $dentistaP->addEspecialidadesDentista($clinicaGeral);
 $dentistaP->addEspecialidadesDentista($estetica);
 
 // Adicionando Percentual de Participação ao Dentista Parceiro / mudar pra criaHabilitacao
-$habilitacao1 = new Habilitacao($clinicaGeral, 0.4);
-$habilitacao2 = new Habilitacao($estetica, 0.4);
+$habilitacao1 = Habilitacao::criaHabilitacao($clinicaGeral, 0.4);
+$habilitacao2 = Habilitacao::criaHabilitacao($estetica, 0.4);
 $dentistaP->addHabilitacao($habilitacao1);
 $dentistaP->addHabilitacao($habilitacao2);
 
@@ -78,15 +75,15 @@ $dentistaP->addHabilitacao($habilitacao2);
 // echo $dentistaP;
 
 // Cadastro Paciente e Cliente / save??? / mudar pra criaPaciente e criaCliente
-$paciente = new Paciente("Davi", "35.513.588-7", "davi@gmail.com", "(31) 99318-1787", "19-05-2001");
-$cliente = new Cliente("Sara", "21.026.601-6", "sara@gmail.com", "(31) 98709-1653", "909.809.016-85");
+$paciente = Paciente::cadastraPaciente("Davi", "35.513.588-7", "davi@gmail.com", "(31) 99318-1787", "19-05-2001");
+$cliente = Cliente::cadastraCliente("Sara", "21.026.601-6", "sara@gmail.com", "(31) 98709-1653", "909.809.016-85");
 $paciente->AssociaCliente($cliente);
 
 // echo $paciente;
 // echo $cliente;
 
 // Criando Consulta de Avaliação / save??? / mudar pra criaConsultaAvaliacao
-$consultaAvaliacao = new ConsultaAvaliacao($paciente, $dentistaP, "06-11-2023", "14:00");
+$consultaAvaliacao = ConsultaAvaliacao::criaConsultaAvaliacao($paciente, $dentistaP, "06-11-2023", "14:00");
 
 // echo $consultaAvaliacao;
 
@@ -151,7 +148,7 @@ $dentistaF->save();
 $dentistaP->save();
 
 // mudar pra criaContabilidade
-$contabilidade = new Contabilidade("11-2023");
+$contabilidade = Contabilidade::iniciaContabilidade("11-2023");
 $receita = $contabilidade->calculaPagamento();
 echo "Receita: $receita \n";
 $despesas = $contabilidade->calculaDespesa();
