@@ -4,7 +4,7 @@ include_once('global.php');
 // leticia: classe permissoes estava com informações de outras classes
 class Permissoes extends persist {
 
-    public $verificado = null;
+    static protected $verificado = null;
     static $local_filename = "permissoes.txt";
   
     public function __construct() {
@@ -22,9 +22,9 @@ verificaPermissao($loginAtual, __FUNCTION__);
 //__FUNCTION__ vai checar o nome da funcao
 
 */  
-    public function verificaLogin() {
-        $this->verificado = Login::getRecordsByField("logado", 1);
-        if($verificado->getLogado() == 1){
+    static public function verificaLogin() {
+        self::$verificado = Login::getRecordsByField("logado", 1);
+        if(self::$verificado != NULL){
             return true;
         }
         else 
@@ -34,27 +34,27 @@ verificaPermissao($loginAtual, __FUNCTION__);
   
     static public function verificaPermissao(string $Permissao) {
 
-        
-        $usuario = $login->getUsuario();
-        $perfil  = $usuario->getPerfil();
-        $permissoes = $perfil->getPermissoes();
-
-        $logado = $this->verificaLogin();
-
-       if( $logado == true){
-
-       for ($i=0; $i<sizeof($permissoes); $i++) {
-
-          if ($permissoes[$i] == $Permissao) {
-
-            return true;
-          }
-         
-       }
-    }
+        $logado = self::verificaLogin();
+      
+       if ($logado == true){
+         $usuario = self::$verificado[0]->getUsuario();
+         $perfil  = $usuario->getPerfil();
+         $permissoes = $perfil->getPermissoes();
 
 
+         for ($i=0; $i<sizeof($permissoes); $i++) {
+  
+            if ($permissoes[$i] == $Permissao) {
+  
+              return true;
+            }
+           
+         }
+    } else
+        echo "Você não está logado.\n";
+    
       return false;
+  
     }
 
     static public function getFilename() {

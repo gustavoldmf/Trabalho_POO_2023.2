@@ -44,13 +44,12 @@ class Dentista extends Pessoa {
   //leticia: mudei metodo para addEspecialidade em vez de set especialidade. Agora, adicionamos uma especialidade por vez.
   
   public function addEspecialidadesDentista(Especialidade $especialidade) { 
-    $login1 = Login::getRecordsbyField("logado", 1);
-    $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
+    $permissao = Permissoes::verificaPermissao(__FUNCTION__);
 
     if ($permissao === true){
      array_push($this->especialidadesDentista, $especialidade);
     } else {
-      echo "Voce nao tem permissao para realizar esta acao";
+      echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
     }
   }
 

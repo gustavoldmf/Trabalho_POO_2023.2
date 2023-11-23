@@ -21,14 +21,13 @@ class Procedimentos extends persist {
     }
 
     static function criaProcedimento(string $nome, string $descricao, float $valorUnitario, Especialidade $especialidade){
-      $login1 = Login::getRecordsbyField("logado", 1);
-      $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
+      $permissao = Permissoes::verificaPermissao(__FUNCTION__);
 
       if ($permissao === true){
       $procedimento = new Procedimento ($nome, $descricao, $valorUnitario, $especialidade);
         return $procedimento;
       } else {
-        echo "Voce nao tem permissao para realizar esta acao";
+        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
       }
     }
 

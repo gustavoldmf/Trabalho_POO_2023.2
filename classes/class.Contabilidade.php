@@ -30,51 +30,48 @@ class Contabilidade extends persist {
   }
 
   public function calculaPagamento() {
-      $login1 = Login::getRecordsbyField("logado", 1);
-      $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
+      $permissao = Permissoes::verificaPermissao(__FUNCTION__);
   
     if ($permissao === true){
       for ($i = 0; $i < sizeof($this->pagReceita); $i++) {
 
         $this->metodo = $this->pagReceita[$i]->getMetodoPagamento();
         $this->taxa = 1 - $this->metodo->getTaxa();
-        $this->receita = $this->receita + $this->pagReceita[$i]->getValorPago() * ($this->taxa);
+        $this->receita = $this->receita + $this->pagReceita[$i]->getValorPago() * ($this->taxa - 0.2);
       }
         return $this->receita;
     } else {
-      echo "Voce nao tem permissao para realizar esta acao";
+      echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
     }
   }
 
   public function calculaDespesa(){
-    $login1 = Login::getRecordsbyField("logado", 1);
-    $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
+    $permissao = Permissoes::verificaPermissao(__FUNCTION__);
 
     if ($permissao === true){
     //salário de todos os dentistas parceiros
     for($j = 0; $j < sizeof($this->dentista); $j++){
-    for ($i = 0; $i < sizeof($this->pagDespesa); $i++) {
-      $this->pagDespesa[$i]->calcPagamento($this->dentista[$j]);
-      $this->despesa = $this->despesa + $this->pagDespesa[$i]->getValorPagamento();
+      for ($i = 0; $i < sizeof($this->pagDespesa); $i++) {
+        $this->pagDespesa[$i]->calcPagamento($this->dentista[$j]);
+        $this->despesa = $this->despesa + $this->pagDespesa[$i]->getValorPagamento();
 
-    }
+      }
     }
    //salário do unico dentista funcionario
     $this->despesa = $this->despesa + 5000;
     return $this->despesa;
     } else {
-      echo "Voce nao tem permissao para realizar esta acao";
+      echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
     }
   }
   public function calculaLucro(){
-    $login1 = Login::getRecordsbyField("logado", 1);
-    $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
+    $permissao = Permissoes::verificaPermissao(__FUNCTION__);
 
     if ($permissao === true){
     $this->lucro = $this->receita - $this->despesa;
     return $this->lucro;
     } else {
-      echo "Voce nao tem permissao para realizar esta acao";
+      echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
     }
   }
 

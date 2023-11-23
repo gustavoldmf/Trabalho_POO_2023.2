@@ -7,6 +7,7 @@ class Tratamento extends persist {
     protected $tipoPagamento;
     protected $execucao = [];
     protected $concluidos = [];
+    protected $registrosPagamento = [];
     static $local_filename = "tratamento.txt";
 
     public function __construct(Orcamento $orcamentoAssociado, string $tipoPagamento) {
@@ -53,9 +54,7 @@ class Tratamento extends persist {
     }
 
     public function associaResponsavel(Dentista $DentistaEx, Procedimentos $Procedimento) {
-       $login1 = Login::getRecordsbyField("logado", 1);
-
-       $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
+       $permissao = Permissoes::verificaPermissao(__FUNCTION__);
 
        if ($permissao === true){
 
@@ -70,13 +69,12 @@ class Tratamento extends persist {
             return false;
         }
        } else {
-        echo "Voce nao tem permissao para realizar esta acao";
+        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
       }
     }
 
     public function marcaConsulta(string $data, string $horario, string $duracao, Responsabilidades $responsabilidades) {
-      $login1 = Login::getRecordsbyField("logado", 1);
-       $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
+       $permissao = Permissoes::verificaPermissao(__FUNCTION__);
 
        if ($permissao === true){
 
@@ -85,26 +83,35 @@ class Tratamento extends persist {
       $c = new Consulta($this->orcamentoAssociado->getPacienteAssociado(), $dentistaExecutor, $data, $horario, $duracao, $procedimentoEscolhido);
       return $c;
        } else {
-        echo "Voce nao tem permissao para realizar esta acao";
+        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
       }
     }
 
     public function finalizaProcedimento(Responsabilidades $responsabilidades, string $dataConclusao) {
-      $login1 = Login::getRecordsbyField("logado", 1);
-       $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
+       $permissao = Permissoes::verificaPermissao(__FUNCTION__);
 
        if ($permissao === true){
         
-        $concluido = new Concluidos($responsabilidades->getDentistaEx(), $responsabilidades->getProcedimento(), $dataConclusao);
-        array_push ($this->concluidos, $concluido);
-
+        $concluidos = new Concluidos($responsabilidades->getDentistaEx(), $responsabilidades->getProcedimento(), $dataConclusao);
+        array_push ($this->concluidos, $concluidos);
+         
       if($responsabilidades->getDentistaEx() instanceof DentistaParceiro){
-        $responsabilidades->DentistaEx->addProcFeitos($concluido);
+          $dentistaEx = $responsabilidades->getDentistaEx();
+          $dentistaEx->addProcFeitos($concluidos);
         }
+        return $concluidos;
       } else {
-        echo "Voce nao tem permissao para realizar esta acao";
+        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
       }
     }
+
+  public function pagar(float $valorPago, string $dataPagamento, MetodoPagamento $metodoPagamento){
+
+      $pagamento = new Pagamento($valorPago, $dataPagamento, $metodoPagamento);
+      array_push($this->registrosPagamento, $pagamento);
+
+      return $pagamento;
+  }
   
     static public function getFilename() {
       return get_called_class()::$local_filename;

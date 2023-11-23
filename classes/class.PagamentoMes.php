@@ -9,7 +9,6 @@ class PagamentoMes extends persist {
   
   public function __construct(string $mesAno) {
       $this->mesAno = $mesAno;
-      $this->valorPagamento = 0;
   }
 
   public function getMesAno() {
@@ -34,6 +33,8 @@ class PagamentoMes extends persist {
     $habilitacoes = $dentista->getHabilitacao();
     
   foreach ($procFeitos as $concluidos) {
+    echo "1 $this->mesAno";
+    echo "2 ".$concluidos->getMesAno();
     if ($this->mesAno === $concluidos->getMesAno()){
     $proc = $concluidos->getProcedimento();
       

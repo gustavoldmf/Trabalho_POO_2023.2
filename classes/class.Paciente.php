@@ -29,25 +29,23 @@ class Paciente extends Pessoa {
 
     public function AssociaCliente (Cliente $ClienteAssociado)
     {
-      $login1 = Login::getRecordsbyField("logado", 1);
-      $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
+      $permissao = Permissoes::verificaPermissao(__FUNCTION__);
 
       if ($permissao === true){
       $this->ClienteAssociado=$ClienteAssociado;  
       } else {
-        echo "Voce nao tem permissao para realizar esta acao";
+        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
       }
     }
       
     public function DesassociaCliente (Cliente $ClienteAssociado)
     { 
-      $login1 = Login::getRecordsbyField("logado", 1);
-      $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
+      $permissao = Permissoes::verificaPermissao(__FUNCTION__);
 
       if ($permissao === true){
       $this->ClienteAssociado= null;  
       } else {
-        echo "Voce nao tem permissao para realizar esta acao";
+        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
       }
     }
 
@@ -57,8 +55,7 @@ class Paciente extends Pessoa {
     }
 
     public function exibeInfo(){
-      $login1 = Login::getRecordsbyField("logado", 1);
-      $permissao = Permissoes::verificaPermissao($login1[0], __FUNCTION__);
+      $permissao = Permissoes::verificaPermissao(__FUNCTION__);
 
       if ($permissao === true){
       print("Informações do Paciente:" ."\n\n");
@@ -68,7 +65,7 @@ class Paciente extends Pessoa {
       print("Contato:" .$this->telefone ."\n");
       print("Data de nascimento:" .$this->nascimento ."\n");
       } else {
-        echo "Voce nao tem permissao para realizar esta acao";
+        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
       }
     }
 
