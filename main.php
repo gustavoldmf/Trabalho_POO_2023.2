@@ -145,3 +145,6 @@ $despesas = $contabilidade->calculaDespesa();
 echo "Despesas: R$ $despesas \n";
 $lucroMes = $contabilidade->calculaLucro();
 echo "Resultado financeiro do mês $mes é: R$ $lucroMes \n";
+
+$login2->LogOut();
+Login::desligaSistema();

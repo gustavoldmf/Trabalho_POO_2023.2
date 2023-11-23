@@ -19,15 +19,11 @@ include_once('global.php');
         $this->save();
     }
 
-   static function Instance(Usuario $Usuario) {
+   static function getInstance(Usuario $Usuario) {
        if ( self::$ptrInstance == null )
           self::$ptrInstance = new Login($Usuario);
 
        return self::$ptrInstance;
-   }
-
-   static function getInstance(){
-     return self::$ptrInstance;
    }
 
    static function Logar(string $email, string $senha){
@@ -35,8 +31,8 @@ include_once('global.php');
     
         if($usuario[0]->getSenha() == $senha){
 
-          Login::Instance($usuario[0]);
-          return true;
+          Login::getInstance($usuario[0]);
+          return self::$ptrInstance;
         }
      
      return false;
@@ -44,6 +40,7 @@ include_once('global.php');
    
     public function LogOut(){
       self::$ptrInstance = NULL;
+      
       $this->logado = 0;
       $this->save();
       return self::$ptrInstance;
@@ -56,7 +53,21 @@ include_once('global.php');
    public function getLogado(){
      return $this->logado;
    }
+
+   public function setLogado ($valor){
+     $this->logado = $valor;
+   }
    
+   static function desligaSistema(){
+     
+     $files = glob('classes/dataFiles/*'); // get all file names
+     foreach($files as $file){ // iterate files
+       if(is_file($file)) {
+         unlink($file); // delete file
+       }
+     }
+     
+   }
      static public function getFilename() {
          return get_called_class()::$local_filename;
      }

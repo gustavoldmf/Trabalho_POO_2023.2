@@ -40,7 +40,7 @@ class Contabilidade extends persist {
 
   public function calculaPagamento() {
       $permissao = Permissoes::verificaPermissao(__FUNCTION__);
-  
+    $this->receita=0;
     if ($permissao === true){
       for ($i = 0; $i < sizeof($this->pagReceita); $i++) {
 
@@ -56,7 +56,7 @@ class Contabilidade extends persist {
 
   public function calculaDespesa(){
     $permissao = Permissoes::verificaPermissao(__FUNCTION__);
-
+    $this->despesa=0;
     if ($permissao === true){
     // Pagamento dos dentistas parceiros
     for($j = 0; $j < sizeof($this->dentista); $j++){
@@ -79,7 +79,7 @@ class Contabilidade extends persist {
     $permissao = Permissoes::verificaPermissao(__FUNCTION__);
 
     if ($permissao === true){
-    $this->lucro = $this->receita - $this->despesa;
+    $this->lucro = $this->calculaPagamento() - $this->calculaDespesa();
     return $this->lucro;
     } else {
       echo "Você não tem permissão para realizar a função " .__FUNCTION__.  ".\n";
