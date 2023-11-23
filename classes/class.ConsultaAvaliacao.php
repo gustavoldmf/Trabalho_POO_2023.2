@@ -10,11 +10,23 @@ class ConsultaAvaliacao extends persist{
     protected $horario;
     static $local_filename = "consultaAvaliacao.txt";
 
-    public function __construct(Paciente $pacienteAssociado, Dentista $dentistaAvaliador, string $data, string $horario) {
+    private function __construct(Paciente $pacienteAssociado, Dentista $dentistaAvaliador, string $data, string $horario) {
         $this->pacienteAssociado = $pacienteAssociado;
         $this->dentistaAvaliador = $dentistaAvaliador;
         $this->data = $data;
         $this->horario = $horario;
+    }
+
+    static public function criaConsultaAvaliacao (Paciente $pacienteAssociado, Dentista $dentistaAvaliador, string $data, string $horario) {
+  
+      $permissao = Permissoes::verificaPermissao(__FUNCTION__);
+  
+      if ($permissao === true){
+        $consulta = new ConsultaAvaliacao ($pacienteAssociado, $dentistaAvaliador, $data, $horario);
+        return $consulta;
+      } else {
+        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+      }
     }
   
     public function getPacienteAssociado(){

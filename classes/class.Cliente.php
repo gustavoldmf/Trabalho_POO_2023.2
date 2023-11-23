@@ -7,7 +7,7 @@ class Cliente extends Pessoa {
     protected $cpf;
     static $local_filename = "clientes.txt";
 
-    public function __construct(string $nome, string $RG, string $email, string $telefone, string $cpf) 
+    private function __construct(string $nome, string $RG, string $email, string $telefone, string $cpf) 
     {
         $this->nome=$nome;
         $this->RG=$RG;
@@ -15,7 +15,20 @@ class Cliente extends Pessoa {
         $this->telefone=$telefone;
         $this->cpf=$cpf;
     }
+  
+    static public function cadastraCliente (string $nome, string $RG, string $email, string $telefone, string $cpf) {
+  
+      $permissao = Permissoes::verificaPermissao(__FUNCTION__);
+  
+      if ($permissao === true){
+        $cliente = new Cliente ($nome, $RG, $email, $telefone, $cpf);
+        return $cliente;
+      } else {
+        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+      }
+    }
 
+  
     public function getCpf ()
     {
       return $this->cpf;

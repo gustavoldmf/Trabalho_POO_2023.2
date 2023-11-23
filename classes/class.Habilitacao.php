@@ -9,9 +9,21 @@ class Habilitacao extends persist {
     static $local_filename = "habilitacao.txt";
   
 
-    public function __construct(Especialidade $especialidade, float $comissao) {
+    private function __construct(Especialidade $especialidade, float $comissao) {
         $this->especialidade = $especialidade;
         $this->comissao = $comissao;
+    }
+
+    static public function criaHabilitacao (Especialidade $especialidade, float $comissao) {
+  
+      $permissao = Permissoes::verificaPermissao(__FUNCTION__);
+  
+      if ($permissao === true){
+        $habilitacao = new Habilitacao ( $especialidade, $comissao);
+        return $habilitacao;
+      } else {
+        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+      }
     }
 
     public function getEspecialidade() {

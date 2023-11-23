@@ -107,10 +107,18 @@ class Tratamento extends persist {
 
   public function pagar(float $valorPago, string $dataPagamento, MetodoPagamento $metodoPagamento){
 
+    $permissao = Permissoes::verificaPermissao(__FUNCTION__);
+
+    if ($permissao === true){
+
       $pagamento = new Pagamento($valorPago, $dataPagamento, $metodoPagamento);
       array_push($this->registrosPagamento, $pagamento);
 
       return $pagamento;
+      
+    } else {
+      echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+    }
   }
   
     static public function getFilename() {

@@ -17,7 +17,7 @@ class Contabilidade extends persist {
   
   static $local_filename = "contabilidade.txt";
 
-  public function __construct($mesAno) {
+  private function __construct(string $mesAno) {
       $this->mesAno = $mesAno;
       $this->pagReceita = Pagamento::getRecordsbyField ("mesAno", $mesAno);
       $this->dentista = DentistaParceiro::getRecords();
@@ -30,6 +30,18 @@ class Contabilidade extends persist {
       // $this->despesa = Contabilidade::calculaDespesa();
       // $this->lucro = Contabilidade::calculaLucro();
     
+  }
+
+  static public function iniciaContabilidade (string $mesAno) {
+
+    $permissao = Permissoes::verificaPermissao(__FUNCTION__);
+
+    if ($permissao === true){
+      $contabilidade = new Contabilidade ($mesAno);
+      return $contabilidade;
+    } else {
+      echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+    }
   }
 
   public function calculaPagamento() {

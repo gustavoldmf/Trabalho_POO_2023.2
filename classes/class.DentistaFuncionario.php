@@ -8,7 +8,7 @@ class DentistaFuncionario extends Dentista {
     static $local_filename = "dentistaFuncionario.txt";
   
   
-    public function __construct (string $nome, string $RG, string $email, string $telefone, string $CRO, string $endereco, float $salario) 
+    private function __construct (string $nome, string $RG, string $email, string $telefone, string $CRO, string $endereco, float $salario) 
     {
         $this->nome=$nome;
         $this->RG=$RG;
@@ -20,6 +20,18 @@ class DentistaFuncionario extends Dentista {
         $this->especialidadesDentista = [];
     } 
 
+    static public function cadastraDentistaFuncionario (string $nome, string $RG, string $email, string $telefone, string $CRO, string $endereco, float $salario) {
+  
+      $permissao = Permissoes::verificaPermissao(__FUNCTION__);
+  
+      if ($permissao === true){
+        $dentista = new DentistaFuncionario ($nome, $RG, $email, $telefone, $CRO, $endereco, $salario);
+        return $dentista;
+      } else {
+        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+      }
+    }
+  
     public function getSalario()
     {
       return $this->salario;

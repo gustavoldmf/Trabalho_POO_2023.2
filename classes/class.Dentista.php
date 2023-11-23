@@ -10,7 +10,7 @@ class Dentista extends Pessoa {
   protected $usuario;
   static $local_filename = "dentista.txt";
   
-  public function __construct(string $nome, string $RG, string $email, string $telefone, string $CRO, string $endereco) {
+  private function __construct(string $nome, string $RG, string $email, string $telefone, string $CRO, string $endereco) {
       $this->nome = $nome;
       $this->RG = $RG;
       $this->email = $email;
@@ -20,6 +20,19 @@ class Dentista extends Pessoa {
         
       $this->especialidadesDentista = [];
   }
+
+  static public function cadastraDentista (string $nome, string $RG, string $email, string $telefone, string $CRO, string $endereco) {
+
+    $permissao = Permissoes::verificaPermissao(__FUNCTION__);
+
+    if ($permissao === true){
+      $dentista = new Dentista ($nome, $RG, $email, $telefone, $CRO, $endereco);
+      return $dentista;
+    } else {
+      echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+    }
+  }
+  
 
   public function getCRO() {
       return $this->CRO;

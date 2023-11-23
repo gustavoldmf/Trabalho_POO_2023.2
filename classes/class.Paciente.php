@@ -17,6 +17,19 @@ class Paciente extends Pessoa {
         $this->nascimento= $nascimento;
     }
 
+    static public function cadastraPaciente (string $nome, string $RG, string $email, string $telefone, string $nascimento) {
+      
+      $permissao = Permissoes::verificaPermissao(__FUNCTION__);
+
+      if ($permissao === true){
+        $paciente = new Paciente ($nome, $RG, $email, $telefone, $nascimento);
+        return $paciente;
+        
+      } else {
+        echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
+      }
+    }
+  
     public function getNascimento ()
     {
       return $this->nascimento;

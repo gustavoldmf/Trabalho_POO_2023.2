@@ -22,10 +22,7 @@ include_once('global.php');
    static function Instance(Usuario $Usuario) {
        if ( self::$ptrInstance == null )
           self::$ptrInstance = new Login($Usuario);
-          
-   
-       
-     
+
        return self::$ptrInstance;
    }
 
