@@ -11,7 +11,7 @@ class Procedimentos extends persist {
     static $local_filename = "procedimentos.txt";
 
 //leticia: adicionei construtor e metodos para o parametro especialidade
-    public function __construct(string $nome, string $descricao, float $valorUnitario, Especialidade $especialidade) 
+    private function __construct(string $nome, string $descricao, float $valorUnitario, Especialidade $especialidade) 
     {
         $this->nome=$nome;
         $this->descricao=$descricao;
@@ -20,11 +20,11 @@ class Procedimentos extends persist {
         $this->save();
     }
 
-    static function criaProcedimento(string $nome, string $descricao, float $valorUnitario, Especialidade $especialidade){
+    static public function criaProcedimento(string $nome, string $descricao, float $valorUnitario, Especialidade $especialidade){
       $permissao = Permissoes::verificaPermissao(__FUNCTION__);
 
       if ($permissao === true){
-      $procedimento = new Procedimento ($nome, $descricao, $valorUnitario, $especialidade);
+      $procedimento = new Procedimentos($nome, $descricao, $valorUnitario, $especialidade);
         return $procedimento;
       } else {
         echo "Você não tem permissão para realizar " .__FUNCTION__. ".\n";
