@@ -3,17 +3,14 @@
 include_once('global.php');
 include_once ('setup.php');
 
-// -------------------------------------- Roteiro de Testes --------------------------------------
+// Tentativa inicial de acessar uma funcionalidade sem que um login tenha sido realizado previamente
+$pacienteTeste =  Paciente::cadastraPaciente("Samuel", "23.494.298-8", "samuel@gmail.com", "(31) 99855-7846", "25-06-1998");
+echo $pacienteTeste;
 
-// Teste Funcionalidade sem Login / Mudar pra criaPaciente
-// $pacienteTeste =  Paciente::cadastraPaciente("Samuel", "23.494.298-8", "samuel@gmail.com", "(31) 99855-7846", "25-06-1998");
-// echo $pacienteTeste;
-
-// Cadastro do Usuário, mas sem a permissão de Cadastrar Procedimento / mudar pra cadastroEspecialidade cadastroProcedimento
+// Cadastro do Usuário com perfil adminTeste, que possui todas as funcionalidades menos a de criar um procedimento. Para se criar um procedimento, é necessário que haja uma especialidade, então ela também está sendo criada, o que mostra que outra função é permitida.
 Login::Logar("mateus@gmail.com","mateus544");
 $login1 = Login::getRecordsbyField("logado", 1);
-
-print_r ($login1);
+// print_r ($login1);
 
 $especialidadeTeste = Especialidade::criaEspecialidade ("Ortodontia");
 //$procedimentoTeste = Procedimentos::criaProcedimento("Limpeza", "", 200.0, $especialidadeTeste);
@@ -128,8 +125,6 @@ $concluidos2 = $tratamento->finalizaProcedimento($responsavel2, "15-11-2023");
 $concluidos3 = $tratamento->finalizaProcedimento($responsavel3, "24-11-2023");
 $concluidos4 = $tratamento->finalizaProcedimento($responsavel4, "27-11-2023");
 
-
-
 // echo $concluidos1;
 // echo $concluidos2;
 // echo $concluidos3;
@@ -150,8 +145,8 @@ $dentistaP->save();
 // mudar pra criaContabilidade
 $contabilidade = Contabilidade::iniciaContabilidade("11-2023");
 $receita = $contabilidade->calculaPagamento();
-echo "Receita: $receita \n";
+echo "Receita: R$ $receita \n";
 $despesas = $contabilidade->calculaDespesa();
-echo "Despesas: $despesas \n";
+echo "Despesas: R$ $despesas \n";
 $lucroMes = $contabilidade->calculaLucro();
-echo "Lucro do Mês de Novembro: R$ $lucroMes \n";
+echo "Lucro do mês $mes: R$ $lucroMes \n";
