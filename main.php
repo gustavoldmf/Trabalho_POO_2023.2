@@ -72,8 +72,7 @@ $habilitacao1 = new Habilitacao($clinicaGeral, 0.4);
 $habilitacao2 = new Habilitacao($estetica, 0.4);
 $dentistaP->addHabilitacao($habilitacao1);
 $dentistaP->addHabilitacao($habilitacao2);
-$dentistaF->save();
-$dentistaP->save();
+
 
 // echo $dentistaF;
 // echo $dentistaP;
@@ -132,6 +131,8 @@ $concluidos2 = $tratamento->finalizaProcedimento($responsavel2, "15-11-2023");
 $concluidos3 = $tratamento->finalizaProcedimento($responsavel3, "24-11-2023");
 $concluidos4 = $tratamento->finalizaProcedimento($responsavel4, "27-11-2023");
 
+
+
 // echo $concluidos1;
 // echo $concluidos2;
 // echo $concluidos3;
@@ -145,6 +146,9 @@ $pagamento1 = $tratamento->pagar($valorTotal/2,"10-11-2023",$pix);
 $pagamento2 = $tratamento->pagar($valorTotal/2,"27-11-2023",$credito3);
 $pagamento1->save();
 $pagamento2->save();
+
+$dentistaF->save();
+$dentistaP->save();
 
 // mudar pra criaContabilidade
 $contabilidade = new Contabilidade("11-2023");
