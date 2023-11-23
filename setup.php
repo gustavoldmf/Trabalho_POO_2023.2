@@ -5,10 +5,10 @@ include_once('global.php');
 // Criando Usuários
 $admin = array("criaProcedimento", "criaOrcamento", "calculaPagamento", "calculaDespesa", "calculaLucro", "addEspecialidadeDentista",
 "addProcFeitos", "addHabilitacao", "calcPagamento", "addProcedimento","addDetalhamento", "associaResponsavel", "DesassociaCliente", "exibeInfo",
-"associaResponsavel", "marcaConsulta", "finalizaProcedimento", "criaUsuario","verificaPermissao", "addEspecialidadesDentista","AssociaCliente", "cadastraPaciente", "criaEspecialidade","cadastraDentistaFuncionario", "cadastraDentistaParceiro", "cadastraDentista", "criaHabilitacao", "cadastraCliente", "criaConsultaAvaliacao", "iniciaContabilidade");
+"associaResponsavel", "marcaConsulta", "finalizaProcedimento", "criaUsuario","verificaPermissao", "addEspecialidadesDentista","AssociaCliente", "cadastraPaciente", "criaEspecialidade","cadastraDentistaFuncionario", "cadastraDentistaParceiro", "cadastraDentista", "criaHabilitacao", "cadastraCliente", "criaConsultaAvaliacao", "iniciaContabilidade", "pagar");
 // criar a funcao criaProcedimento e colocar como permissao em admin, mas nao em adminTeste
 
-$adminTeste = array("criaOrcamento", "calculaPagamento", "calculaDespesa", "calculaLucro", "addEspecialidadeDentista","addProcFeitos", "addHabilitacao", "calcPagamento", "addProcedimento", "addDetalhamento", "associaResponsavel", "DesassociaCliente", "exibeInfo", "associaResponsavel", "marcaConsulta", "finalizaProcedimento", "criaUsuario","verificaPermissao", "addEspecialidadesDentista","AssociaCliente", "cadastraPaciente", "criaEspecialidade","cadastraDentistaFuncionario", "cadastraDentistaParceiro", "cadastraDentista", "criaHabilitacao", "cadastraCliente", "criaConsultaAvaliacao", "iniciaContabilidade");
+$adminTeste = array("criaOrcamento", "calculaPagamento", "calculaDespesa", "calculaLucro", "addEspecialidadeDentista","addProcFeitos", "addHabilitacao", "calcPagamento", "addProcedimento", "addDetalhamento", "associaResponsavel", "DesassociaCliente", "exibeInfo", "associaResponsavel", "marcaConsulta", "finalizaProcedimento", "criaUsuario","verificaPermissao", "addEspecialidadesDentista","AssociaCliente", "cadastraPaciente", "criaEspecialidade","cadastraDentistaFuncionario", "cadastraDentistaParceiro", "cadastraDentista", "criaHabilitacao", "cadastraCliente", "criaConsultaAvaliacao", "iniciaContabilidade", "pagar");
 
 $perfilAdmin = new Perfil ($admin);
 $perfilAdminTeste = new Perfil ($adminTeste);
@@ -39,5 +39,9 @@ $credito5->save();
 $credito6->save();
 
 // Instanciando o Pagamento do Mês de Novembro
-$pagamentoNovembro = new PagamentoMes("11-2023");
+$mesAno = "11-2023";
+$pagamentoNovembro = new PagamentoMes($mesAno);
 $pagamentoNovembro->save();
+
+$parte = explode("-", $mesAno);
+$mes = $parte[0];
