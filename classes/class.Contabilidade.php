@@ -38,7 +38,7 @@ class Contabilidade extends persist {
     }
   }
 
-  public function calculaPagamento() {
+  public function calculaReceita() {
       $permissao = Permissoes::verificaPermissao(__FUNCTION__);
     $this->receita=0;
     if ($permissao === true){
@@ -79,7 +79,7 @@ class Contabilidade extends persist {
     $permissao = Permissoes::verificaPermissao(__FUNCTION__);
 
     if ($permissao === true){
-    $this->lucro = $this->calculaPagamento() - $this->calculaDespesa();
+    $this->lucro = $this->calculaReceita() - $this->calculaDespesa();
     return $this->lucro;
     } else {
       echo "Você não tem permissão para realizar a função " .__FUNCTION__.  ".\n";

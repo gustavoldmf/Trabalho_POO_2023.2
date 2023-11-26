@@ -3,10 +3,13 @@
 include_once('global.php');
 include_once ('setup.php');
 
-// Tentativa inicial de acessar uma funcionalidade sem que um login tenha sido realizado previamente. Como não há login, apareça a mensagem indicando que o usuário não está logado e, por não estar logado, aparecerá também que o usuário não tem permissão para executar esta ação. Para um caso de interface, poderia visualizar uma situação com 2 pop-ups de erro aparecendo um sobre o outro em seguida
+// Tentativa inicial de acessar uma funcionalidade sem que um login tenha sido realizado previamente. Como não há login, apareça a mensagem indicando que o usuário não está logado e, por não estar logado, aparecerá também que o usuário não tem permissão para executar esta ação. Para isso, ele, dentro da função de cadastro, usa a função verificaPermissao, que verifica se o usuário tem permissão para realizar tal ação. Caso não, retorna falso. Se sim, continua a criação do objeto.
+echo "Teste Usuário Não Logado:\n";
 $pacienteTeste =  Paciente::cadastraPaciente("Samuel", "23.494.298-8", "samuel@gmail.com", "(31) 99855-7846", "25-06-1998");
 
-// Cadastro do Usuário com perfil adminTeste, que possui todas as funcionalidades menos a de criar um procedimento. Para se criar um procedimento, é necessário que haja uma especialidade, então ela também está sendo criada, o que mostra que outra função é permitida
+// Login do Usuário com perfil adminTeste, que possui todas as funcionalidades menos a de criar um procedimento. Para se criar um procedimento, é necessário que haja uma especialidade, então ela ☺também está sendo criada, o que mostra que outra função é permitida. Para isso, ele, dentro da função de cadastro, usa a função verificaPermissao, que verifica se o usuário tem permissão para realizar tal ação. Caso não, retorna falso. Se sim, continua a criação do objeto.
+
+echo "\nTeste Usuário Sem Acesso à Criação de Procedimento:\n";
 $login1 = Login::Logar("mateus@gmail.com","mateus544");
 // print_r ($login1);
 
@@ -15,7 +18,8 @@ $procedimentoTeste = Procedimentos::criaProcedimento("Aparelho Ortodôntico", "I
 
 $login1->LogOut();
 
-// Cadastro do Usuário com perfil admim, que possui acesso total ao sistema e às funcionalidades
+// Login do Usuário com perfil admim, que possui acesso total ao sistema e às funcionalidades. Para isso, a função logar recebe como parâmetro o email e senha do usuário. Caso as entradas sejam compatíveis, executa o login. Se não, retorna NULL.
+
 $login2 = Login::Logar("joao@gmail.com","joao146");
 
 // Criando Especialidades
@@ -138,8 +142,9 @@ $pagamento1->save();
 $pagamento2->save();
 
 // Iniciando o cálculo da receita, das despesas e do resultado final para o mês estabelecido (novembro)
+echo "\nTeste dos Cálculos de Receita, Despesas e Resultado Final:\n";
 $contabilidade = Contabilidade::iniciaContabilidade("$mesAno");
-$receita = $contabilidade->calculaPagamento();
+$receita = $contabilidade->calculaReceita();
 echo "Receita: R$ $receita \n";
 $despesas = $contabilidade->calculaDespesa();
 echo "Despesas: R$ $despesas \n";

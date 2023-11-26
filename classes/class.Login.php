@@ -60,10 +60,10 @@ include_once('global.php');
    
    static function desligaSistema(){
      
-     $files = glob('classes/dataFiles/*'); // get all file names
-     foreach($files as $file){ // iterate files
+     $files = glob('classes/dataFiles/*'); 
+     foreach($files as $file){ 
        if(is_file($file)) {
-         unlink($file); // delete file
+         unlink($file);
        }
      }
      
