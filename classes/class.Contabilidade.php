@@ -40,7 +40,7 @@ class Contabilidade extends persist {
 
   public function calculaReceita() {
       $permissao = Permissoes::verificaPermissao(__FUNCTION__);
-    $this->receita = 0;
+    $this->receita=0;
     if ($permissao === true){
       for ($i = 0; $i < sizeof($this->pagReceita); $i++) {
 
@@ -56,7 +56,7 @@ class Contabilidade extends persist {
 
   public function calculaDespesa(){
     $permissao = Permissoes::verificaPermissao(__FUNCTION__);
-    $this->despesa = 0;
+    $this->despesa=0;
     if ($permissao === true){
     // Pagamento dos dentistas parceiros
     for($j = 0; $j < sizeof($this->dentista); $j++){
